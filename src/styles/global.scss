@@ -22,10 +22,15 @@ body {
 }
 
 h1,
+h2 {
+  font-family: $font-serif;
+}
+
+h1,
 h2,
 h3 {
   margin: 0;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.15;
   letter-spacing: -0.01em;
   text-wrap: balance;

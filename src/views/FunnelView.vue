@@ -1,20 +1,15 @@
 <script setup lang="ts">
 // Landing (/). Todo el texto sale de LANDING en src/content/copy.ts.
 // Cada botón que abre el registro lleva data-cta="registro" (lo usa el e2e).
-// Lenguaje visual de DISKRET: la línea bronce del logo (corchete), el plano y el cajetín de lámina.
+// Dirección: editorial de lujo (serif grande, mucho aire, Michelle protagonista) + recursos de
+// arquitectura propios de DISKRET: la línea bronce del logo, la retícula de plano y el cajetín.
 import { onBeforeUnmount, onMounted, ref, type Directive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import BrandLogo from '@/components/BrandLogo.vue'
 import RegistrationModal from '@/components/RegistrationModal.vue'
 import SiteFooter from '@/components/SiteFooter.vue'
 import WeekCountdown from '@/components/WeekCountdown.vue'
-import {
-  IS_LOCAL,
-  PERSON_NAME,
-  STORAGE_PREFIX,
-  VSL_POSTER,
-  VSL_POSTER_FALLBACK,
-} from '@/config/funnel'
+import { IS_LOCAL, PERSON_NAME, STORAGE_PREFIX } from '@/config/funnel'
 import { LANDING } from '@/content/copy'
 import { captureFbParams } from '@/utils/fbclid'
 
@@ -22,12 +17,6 @@ const route = useRoute()
 const router = useRouter()
 const modalOpen = ref(false)
 const showSticky = ref(false)
-
-// Portada del video: Cloudinary → archivo local → recuadro oscuro
-const poster = ref(VSL_POSTER || VSL_POSTER_FALLBACK)
-function onPosterError() {
-  poster.value = poster.value !== VSL_POSTER_FALLBACK ? VSL_POSTER_FALLBACK : ''
-}
 
 function openModal() {
   // Quien no calificó hace menos de 24 h vuelve a /sin-espacio
@@ -41,7 +30,7 @@ function openModal() {
   modalOpen.value = true
 }
 
-// Aparición suave al entrar en pantalla (una sola vez; sin movimiento si reduce-motion)
+// Aparición suave al entrar en pantalla (una sola vez; sin desplazamiento si reduce-motion)
 const io =
   typeof IntersectionObserver !== 'undefined'
     ? new IntersectionObserver(
@@ -52,7 +41,7 @@ const io =
               io?.unobserve(e.target)
             }
           }),
-        { rootMargin: '0px 0px -10% 0px' },
+        { rootMargin: '0px 0px -8% 0px' },
       )
     : null
 const vReveal: Directive<HTMLElement> = {
@@ -75,6 +64,8 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
   io?.disconnect()
 })
+
+const pad = (n: number) => String(n).padStart(2, '0')
 </script>
 
 <template>
@@ -86,97 +77,130 @@ onBeforeUnmount(() => {
       </div>
     </header>
 
-    <!-- HERO -->
+    <!-- HERO: titular editorial + Michelle como portada del video -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero__inner">
-        <p class="hero__kicker">{{ LANDING.topbarTag }}</p>
-        <h1 id="hero-title" class="hero__title">
-          {{ LANDING.headline }} <span class="accent">{{ LANDING.headlineAccent }}</span>
-        </h1>
-        <p class="hero__sub">{{ LANDING.sub }}</p>
+        <div class="hero__copy">
+          <p class="eyebrow">{{ LANDING.topbarTag }}</p>
+          <h1 id="hero-title" class="hero__title">
+            {{ LANDING.headline }}
+            <em class="hero__accent">{{ LANDING.headlineAccent }}</em>
+          </h1>
+          <p class="hero__sub">{{ LANDING.sub }}</p>
+          <div class="hero__cta">
+            <button type="button" class="btn btn--lg" data-cta="registro" @click="openModal">
+              <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.cta }}
+            </button>
+            <p class="hero__note">{{ LANDING.ctaNote }}</p>
+          </div>
+        </div>
 
-        <div class="frame">
-          <button type="button" class="vsl" data-cta="registro" aria-label="Ver el video completo" @click="openModal">
+        <div class="hero__media">
+          <button type="button" class="portrait" data-cta="registro" aria-label="Ver el video completo" @click="openModal">
             <img
-              v-if="poster"
-              class="vsl__poster"
-              :src="poster"
+              class="portrait__img"
+              :src="LANDING.about.photo"
               alt=""
               width="1080"
-              height="608"
+              height="1080"
               fetchpriority="high"
               decoding="async"
-              @error="onPosterError"
             />
-            <span class="vsl__play" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
-            <span class="vsl__caption">
-              <strong>{{ PERSON_NAME }}</strong>
-              <span>{{ LANDING.videoCaption }}</span>
+            <span class="portrait__play">
+              <span class="portrait__icon" aria-hidden="true"><i class="fa-solid fa-play"></i></span>
+              <span class="portrait__label">
+                <strong>Mira el video</strong>
+                <span>{{ PERSON_NAME }} · Arquitecta</span>
+              </span>
             </span>
           </button>
         </div>
+      </div>
 
+      <div class="wrap">
         <ul class="hero__audience" role="list">
           <li v-for="a in LANDING.audience" :key="a">{{ a }}</li>
         </ul>
-
-        <button type="button" class="btn btn--lg" data-cta="registro" @click="openModal">
-          <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.cta }}
-        </button>
-        <p class="hero__note">{{ LANDING.ctaNote }}</p>
       </div>
     </section>
 
-    <!-- EL PROBLEMA: cita grande + los 3 miedos, sin tarjetas -->
+    <!-- BANDA: el método en seis verbos -->
+    <section class="band" aria-label="El Método Diskret en seis pasos">
+      <p class="wrap band__words">
+        <template v-for="(w, i) in LANDING.methodWords" :key="w">
+          <span>{{ w }}</span><span v-if="i < LANDING.methodWords.length - 1" class="band__sep" aria-hidden="true"></span>
+        </template>
+      </p>
+    </section>
+
+    <!-- EL PROBLEMA: la frase de Michelle en grande -->
     <section class="problem" aria-labelledby="pains-title">
-      <div class="wrap problem__inner">
-        <div v-reveal class="problem__head">
-          <p class="eyebrow">{{ LANDING.pains.eyebrow }}</p>
-          <h2 id="pains-title" class="section__title">{{ LANDING.pains.title }}</h2>
-          <blockquote class="problem__quote">“{{ LANDING.pains.quote }}”</blockquote>
-        </div>
+      <div class="wrap">
+        <p v-reveal class="eyebrow">{{ LANDING.pains.eyebrow }}</p>
+        <h2 id="pains-title" v-reveal class="problem__quote">“{{ LANDING.pains.quote }}”</h2>
+        <p v-reveal class="problem__lead">{{ LANDING.pains.title }}.</p>
         <ol class="fears" role="list">
           <li v-for="(p, i) in LANDING.pains.items" :key="p.title" v-reveal class="fears__item">
-            <span class="fears__num" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
+            <span class="fears__num" aria-hidden="true">{{ pad(i + 1) }}</span>
+            <h3 class="fears__title">{{ p.title }}</h3>
+            <p class="fears__text">{{ p.text }}</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- MÉTODO: plano oscuro, título fijo a la izquierda y pasos a la derecha -->
+    <section class="method" aria-labelledby="steps-title">
+      <div class="wrap method__inner">
+        <div class="method__aside">
+          <div v-reveal>
+            <p class="eyebrow eyebrow--light">{{ LANDING.steps.eyebrow }}</p>
+            <h2 id="steps-title" class="method__title">{{ LANDING.steps.title }}</h2>
+            <p class="method__statement">{{ LANDING.steps.statement }}</p>
+            <button type="button" class="btn btn--light method__cta" data-cta="registro" @click="openModal">
+              {{ LANDING.steps.cta }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <ol class="method__steps" role="list">
+          <li v-for="(s, i) in LANDING.steps.items" :key="s.title" v-reveal class="step">
+            <span class="step__num" aria-hidden="true">{{ pad(i + 1) }}</span>
             <div>
-              <h3 class="fears__title">{{ p.title }}</h3>
-              <p class="fears__text">{{ p.text }}</p>
+              <h3 class="step__title">{{ s.title }}</h3>
+              <p class="step__text">{{ s.text }}</p>
             </div>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- MÉTODO DISKRET: sección oscura con retícula de plano -->
-    <section class="method" aria-labelledby="steps-title">
-      <div class="wrap">
-        <div v-reveal class="method__head">
-          <p class="eyebrow eyebrow--light">{{ LANDING.steps.eyebrow }}</p>
-          <h2 id="steps-title" class="section__title">{{ LANDING.steps.title }}</h2>
-        </div>
-        <ol class="method__steps" role="list">
-          <li v-for="(s, i) in LANDING.steps.items" :key="s.title" v-reveal class="step">
-            <span class="step__num" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
-            <h3 class="step__title">{{ s.title }}</h3>
-            <p class="step__text">{{ s.text }}</p>
-          </li>
-        </ol>
-        <p v-reveal class="method__statement">{{ LANDING.steps.statement }}</p>
-      </div>
+    <!-- CIFRAS -->
+    <section class="facts" aria-label="DISKRET en cifras">
+      <ul class="wrap facts__grid" role="list">
+        <li v-for="f in LANDING.facts" :key="f.label" v-reveal class="facts__item">
+          <span class="facts__value">{{ f.value }}</span>
+          <span class="facts__label">{{ f.label }}</span>
+        </li>
+      </ul>
     </section>
 
-    <!-- PROYECTOS: cada uno como una lámina con su cajetín -->
+    <!-- PROYECTOS: láminas con cajetín -->
     <section class="projects" aria-labelledby="projects-title">
       <div class="wrap">
         <div v-reveal class="projects__head">
           <p class="eyebrow">{{ LANDING.projects.eyebrow }}</p>
-          <h2 id="projects-title" class="section__title">{{ LANDING.projects.title }}</h2>
+          <h2 id="projects-title" class="display">{{ LANDING.projects.title }}</h2>
         </div>
         <div class="projects__grid">
           <article v-for="(p, i) in LANDING.projects.items" :key="p.code" v-reveal class="sheet">
-            <div class="sheet__dim" aria-hidden="true">
-              <span>{{ p.scope }}</span>
-            </div>
+            <header class="sheet__head">
+              <span class="sheet__code">{{ p.code.replace('Proyecto ', '') }}</span>
+              <span class="sheet__place">
+                <span>Ubicación</span>
+                <strong>{{ p.place }}</strong>
+              </span>
+            </header>
+            <div class="sheet__dim" aria-hidden="true"><span>{{ p.scope }}</span></div>
             <dl class="sheet__body">
               <div>
                 <dt>El reto</dt>
@@ -189,19 +213,19 @@ onBeforeUnmount(() => {
             </dl>
             <p class="sheet__after">{{ p.after }}</p>
             <table class="sheet__block">
-              <caption class="sr-only">{{ p.code }}</caption>
+              <caption class="sr-only">Ficha del {{ p.code }}</caption>
               <tbody>
                 <tr>
                   <th scope="row">Proyecto</th>
-                  <td class="sheet__code">{{ p.code.replace('Proyecto ', '') }}</td>
+                  <td>{{ p.code }}</td>
                   <th scope="row">Lámina</th>
-                  <td>{{ String(i + 1).padStart(2, '0') }}/{{ String(LANDING.projects.items.length).padStart(2, '0') }}</td>
+                  <td>{{ pad(i + 1) }}/{{ pad(LANDING.projects.items.length) }}</td>
                 </tr>
                 <tr>
                   <th scope="row">Ubicación</th>
                   <td>{{ p.place }}</td>
-                  <th scope="row">Alcance</th>
-                  <td>{{ p.scope }}</td>
+                  <th scope="row">Estudio</th>
+                  <td>DISKRET</td>
                 </tr>
               </tbody>
             </table>
@@ -213,36 +237,24 @@ onBeforeUnmount(() => {
     <!-- MICHELLE + ¿ES PARA TI? -->
     <section class="about" aria-labelledby="about-title">
       <div class="wrap about__inner">
-        <figure v-reveal class="about__figure">
-          <img
-            :src="LANDING.about.photo"
-            :alt="PERSON_NAME"
-            width="1080"
-            height="1080"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>{{ PERSON_NAME }} · Arquitecta</figcaption>
-        </figure>
-        <div class="about__copy">
-          <div v-reveal>
-            <p class="eyebrow">{{ LANDING.about.eyebrow }}</p>
-            <h2 id="about-title" class="section__title">{{ LANDING.about.title }}</h2>
-            <p class="about__text">{{ LANDING.about.text }}</p>
-          </div>
+        <div v-reveal class="about__intro">
+          <p class="eyebrow">{{ LANDING.about.eyebrow }}</p>
+          <h2 id="about-title" class="display">{{ LANDING.about.title }}</h2>
+          <p class="about__text">{{ LANDING.about.text }}</p>
+          <p class="about__sign">{{ LANDING.about.sign }}</p>
+        </div>
 
-          <div v-reveal class="fit" aria-labelledby="fit-title">
-            <h3 id="fit-title" class="fit__title">{{ LANDING.fit.title }}</h3>
-            <ul class="fit__list" role="list">
-              <li v-for="(f, i) in LANDING.fit.items" :key="i" :class="{ 'is-no': !f.yes }">
-                <i :class="['fa-solid', f.yes ? 'fa-check' : 'fa-xmark']" aria-hidden="true"></i>
-                <span>
-                  <span class="sr-only">{{ f.yes ? 'Sí es para ti:' : 'No es para ti:' }}</span>
-                  {{ f.text }}
-                </span>
-              </li>
-            </ul>
-          </div>
+        <div v-reveal class="fit">
+          <h3 class="fit__title">{{ LANDING.fit.title }}</h3>
+          <ul class="fit__list" role="list">
+            <li v-for="(f, i) in LANDING.fit.items" :key="i" :class="{ 'is-no': !f.yes }">
+              <span class="fit__mark" aria-hidden="true">{{ f.yes ? 'Sí' : 'No' }}</span>
+              <span>
+                <span class="sr-only">{{ f.yes ? 'Sí es para ti:' : 'No es para ti:' }}</span>
+                {{ f.text }}
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -256,12 +268,13 @@ onBeforeUnmount(() => {
         <button type="button" class="btn btn--lg btn--light" data-cta="registro" @click="openModal">
           <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.closing.cta }}
         </button>
+        <div class="closing__timer"><WeekCountdown /></div>
       </div>
     </section>
 
     <SiteFooter :disclaimer="LANDING.disclaimer" />
 
-    <!-- CTA fijo en celular -->
+    <!-- CTA fijo -->
     <Transition name="sticky">
       <div v-if="showSticky && !modalOpen" class="sticky" role="region" aria-label="Ver el video">
         <div class="sticky__copy">
@@ -279,7 +292,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped lang="scss">
-// ── Recursos de marca ─────────────────────────────────────────────────────────
+$bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dark)
+
 // Corchete bronce del logo: líneas a los lados y abajo, abierto arriba.
 @mixin bracket($h: 18px, $color: $accent) {
   content: '';
@@ -292,10 +306,10 @@ onBeforeUnmount(() => {
 
 .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(16px);
   transition:
-    opacity 700ms $ease-out,
-    transform 700ms $ease-out;
+    opacity 800ms $ease-out,
+    transform 800ms $ease-out;
 
   &.is-in {
     opacity: 1;
@@ -308,14 +322,6 @@ onBeforeUnmount(() => {
   }
 }
 
-.section__title {
-  max-width: 680px;
-  margin: 14px 0 0;
-  font-size: clamp(1.75rem, 4.4vw, 2.6rem);
-  font-weight: 300;
-  line-height: 1.12;
-}
-
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -323,14 +329,32 @@ onBeforeUnmount(() => {
 
   &::before {
     content: '';
-    width: 28px;
+    width: 32px;
     height: 1px;
-    background: $accent;
+    background: currentColor;
+    opacity: 0.6;
   }
 
   &--light {
-    color: #c9ad8f;
+    color: $bronze-light;
   }
+}
+
+// Números en serif con cifras alineadas (Cormorant usa cifras antiguas por defecto)
+.step__num,
+.facts__value,
+.sheet__code {
+  font-variant-numeric: lining-nums;
+}
+
+.display {
+  max-width: 760px;
+  margin-top: 18px;
+  font-family: $font-serif;
+  font-size: clamp(2.2rem, 5.2vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
 }
 
 // ── Encabezado ────────────────────────────────────────────────────────────────
@@ -338,10 +362,10 @@ onBeforeUnmount(() => {
   position: sticky;
   top: 0;
   z-index: 10;
-  border-bottom: 1px solid $line;
-  background: rgba($surface, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba($line, 0.8);
+  background: rgba($surface, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   &__inner {
     display: flex;
@@ -353,371 +377,517 @@ onBeforeUnmount(() => {
 
   @media (max-width: 400px) {
     :deep(.logo) {
-      width: 118px;
+      width: 116px;
     }
   }
 }
 
 // ── Hero ──────────────────────────────────────────────────────────────────────
 .hero {
-  padding: 48px 0 40px;
+  padding: 40px 0 0;
 
-  @media (min-width: 900px) {
-    padding: 72px 0 64px;
+  @media (min-width: 960px) {
+    padding: 64px 0 0;
   }
 
   &__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+    display: grid;
+    gap: 36px;
 
-  &__kicker {
-    @include eyebrow;
-    color: $ink-muted;
+    @media (min-width: 960px) {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      align-items: center;
+    }
   }
 
   &__title {
-    max-width: 860px;
-    margin-top: 18px;
-    font-size: clamp(2.1rem, 6.4vw, 3.6rem);
-    font-weight: 300;
+    margin-top: 22px;
+    font-family: $font-serif;
+    font-size: clamp(2.7rem, 7.4vw, 5.4rem);
+    font-weight: 500;
+    line-height: 0.98;
     letter-spacing: -0.02em;
-    line-height: 1.08;
+  }
+
+  &__accent {
+    display: block;
+    margin-top: 0.35em;
+    max-width: 16em;
+    color: $accent-text;
+    font-family: $font-serif;
+    font-size: 0.6em;
+
+    @media (min-width: 960px) {
+      font-size: 0.48em;
+    }
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: 0;
   }
 
   &__sub {
-    max-width: 600px;
-    margin: 22px 0 36px;
+    max-width: 520px;
+    margin-top: 26px;
     color: $ink-muted;
-    font-size: 1.05rem;
+    font-size: 1.06rem;
+  }
+
+  &__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    margin-top: 32px;
+  }
+
+  &__note {
+    color: $ink-muted;
+    font-size: 0.85rem;
+  }
+
+  // En celular el retrato va primero que el texto largo: titular → foto → texto → CTA
+  @media (max-width: 959px) {
+    &__inner {
+      display: flex;
+      flex-direction: column;
+    }
+    &__copy {
+      display: contents;
+    }
+    .eyebrow {
+      order: 1;
+    }
+    &__title {
+      order: 2;
+      margin-top: -14px;
+    }
+    &__media {
+      order: 3;
+    }
+    &__sub {
+      order: 4;
+      margin-top: -8px;
+    }
+    &__cta {
+      order: 5;
+      margin-top: -12px;
+
+      .btn {
+        width: 100%;
+      }
+    }
   }
 
   &__audience {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px 18px;
-    margin: 28px 0 22px;
-    padding: 0;
+    gap: 10px 28px;
+    margin-top: 48px;
+    padding-top: 22px;
+    padding-bottom: 28px;
+    border-top: 1px solid $line;
+    padding-left: 0;
     list-style: none;
 
     li {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       color: $ink;
       font-size: 0.92rem;
 
       &::before {
         content: '';
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: $accent;
+        width: 6px;
+        height: 6px;
+        border: 1px solid $accent;
+        transform: rotate(45deg);
       }
     }
-  }
 
-  &__note {
-    margin-top: 12px;
-    color: $ink-muted;
-    font-size: 0.85rem;
-  }
-}
-
-.accent {
-  display: block;
-  margin-top: 0.3em;
-  color: $accent-text;
-  font-family: $font-serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: 0.8em;
-  letter-spacing: 0;
-}
-
-// Video enmarcado con el corchete del logo
-.frame {
-  position: relative;
-  width: 100%;
-  max-width: 820px;
-  padding-bottom: 14px;
-
-  &::after {
-    @include bracket(48px);
-    right: -14px;
-    bottom: 0;
-    left: -14px;
-
-    @media (max-width: 600px) {
-      right: -8px;
-      left: -8px;
+    @media (min-width: 960px) {
+      margin-top: 72px;
     }
   }
 }
 
-.vsl {
+// Retrato = portada del video, con el corchete del logo detrás
+.hero__media {
+  position: relative;
+  padding: 0 14px 14px 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 0;
+    bottom: 0;
+    left: 14px;
+    border: 1px solid $accent;
+    pointer-events: none;
+  }
+}
+
+.portrait {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 5;
+  max-height: 640px;
   padding: 0;
   border: 0;
-  border-radius: $radius-sm;
   background: $surface-dark;
-  color: $ink-on-dark;
   cursor: pointer;
   font: inherit;
   overflow: hidden;
-  box-shadow: 0 30px 60px -30px rgba($surface-dark, 0.45);
 
-  &__poster {
+  @media (max-width: 959px) {
+    aspect-ratio: 1;
+  }
+
+  &__img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 30% 35%;
-    transition: transform 900ms $ease-out;
+    object-position: 22% 30%;
+    transition: transform 1200ms $ease-out;
   }
 
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba($surface-dark, 0.72), transparent 50%);
-    pointer-events: none;
+    background: linear-gradient(to top, rgba($surface-dark, 0.75), transparent 42%);
   }
 
   &__play {
-    position: relative;
+    position: absolute;
     z-index: 1;
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: $ink-on-dark;
+    text-align: left;
+  }
+
+  &__icon {
     display: grid;
+    flex: none;
     place-items: center;
-    width: 78px;
-    height: 78px;
-    padding-left: 4px;
+    width: 60px;
+    height: 60px;
+    padding-left: 3px;
     border-radius: 50%;
-    background: rgba($raised, 0.94);
+    background: $raised;
     color: $primary;
-    font-size: 1.35rem;
-    box-shadow: 0 0 0 1px rgba($raised, 0.5), 0 0 0 12px rgba($raised, 0.18);
+    font-size: 1.05rem;
+    box-shadow: 0 0 0 8px rgba($raised, 0.2);
     transition: transform 200ms $ease-out;
   }
 
-  @media (hover: hover) and (pointer: fine) {
-    &:hover .vsl__play {
-      transform: scale(1.06);
-    }
-    &:hover .vsl__poster {
-      transform: scale(1.02);
-    }
-  }
-  &:active .vsl__play {
-    transform: scale(0.96);
-  }
-
-  &__caption {
-    position: absolute;
-    z-index: 1;
-    left: 20px;
-    bottom: 16px;
+  &__label {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    font-size: 0.82rem;
     color: $ink-on-dark-muted;
-    font-size: 0.8rem;
-    text-align: left;
 
     strong {
       color: $ink-on-dark;
+      font-family: $font-serif;
+      font-size: 1.45rem;
       font-weight: 500;
-      font-size: 0.98rem;
+      line-height: 1.1;
     }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover .portrait__img {
+      transform: scale(1.03);
+    }
+    &:hover .portrait__icon {
+      transform: scale(1.06);
+    }
+  }
+  &:active .portrait__icon {
+    transform: scale(0.96);
+  }
+}
+
+// ── Banda del método ──────────────────────────────────────────────────────────
+.band {
+  padding: 26px 0;
+  background: $primary;
+  color: $ink-on-dark;
+
+  &__words {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 22px;
+    font-family: $font-serif;
+    font-size: clamp(1.3rem, 3.2vw, 2rem);
+    font-style: italic;
+    line-height: 1.2;
+  }
+
+  &__sep {
+    width: 6px;
+    height: 6px;
+    border: 1px solid $bronze-light;
+    transform: rotate(45deg);
   }
 }
 
 // ── Problema ──────────────────────────────────────────────────────────────────
 .problem {
-  padding: 64px 0;
-  border-top: 1px solid $line;
+  padding: 80px 0 72px;
 
-  @media (min-width: 900px) {
-    padding: 104px 0;
-  }
-
-  &__inner {
-    display: grid;
-    gap: 40px;
-
-    @media (min-width: 900px) {
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-    }
+  @media (min-width: 960px) {
+    padding: 128px 0 112px;
   }
 
   &__quote {
-    margin: 32px 0 0;
-    padding-left: 20px;
-    border-left: 1px solid $accent;
-    color: $ink;
+    max-width: 1000px;
+    margin-top: 26px;
     font-family: $font-serif;
-    font-style: italic;
-    font-size: clamp(1.35rem, 3vw, 1.65rem);
-    line-height: 1.35;
+    font-size: clamp(2rem, 5.4vw, 4rem);
+    font-weight: 500;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+  }
+
+  &__lead {
+    max-width: 560px;
+    margin-top: 26px;
+    color: $ink-muted;
+    font-size: 1.1rem;
   }
 }
 
 .fears {
-  margin: 0;
+  display: grid;
+  gap: 0 40px;
+  margin: 56px 0 0;
   padding: 0;
   list-style: none;
 
-  &__item {
-    display: grid;
-    grid-template-columns: 56px 1fr;
-    gap: 8px;
-    padding: 26px 0;
-    border-top: 1px solid $line;
+  @media (min-width: 860px) {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 80px;
+  }
 
-    &:last-child {
-      border-bottom: 1px solid $line;
-    }
+  &__item {
+    position: relative;
+    padding: 26px 0 30px;
+    border-top: 1px solid $ink;
   }
 
   &__num {
+    display: block;
     color: $accent-text;
-    font-weight: 300;
-    font-size: 1.6rem;
-    line-height: 1;
+    @include eyebrow;
   }
 
   &__title {
-    font-size: 1.2rem;
-    font-weight: 400;
+    margin-top: 16px;
+    font-family: $font-serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   &__text {
-    margin-top: 6px;
+    margin-top: 10px;
     color: $ink-muted;
   }
 }
 
 // ── Método (plano) ────────────────────────────────────────────────────────────
 .method {
-  position: relative;
-  padding: 72px 0;
+  padding: 80px 0;
   background-color: $surface-dark;
   background-image:
-    linear-gradient(rgba(#fff, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(#fff, 0.035) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-position: center top;
+    linear-gradient(rgba(#fff, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(#fff, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
   color: $ink-on-dark;
 
-  @media (min-width: 900px) {
-    padding: 112px 0;
+  @media (min-width: 960px) {
+    padding: 128px 0;
   }
 
-  &__steps {
+  &__inner {
     display: grid;
-    gap: 0 48px;
-    margin: 48px 0 0;
-    padding: 0;
-    list-style: none;
+    gap: 48px;
 
-    @media (min-width: 700px) {
-      grid-template-columns: repeat(2, 1fr);
+    @media (min-width: 960px) {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 96px;
+      align-items: start;
     }
-    @media (min-width: 1000px) {
-      grid-template-columns: repeat(3, 1fr);
+  }
+
+  &__aside {
+    @media (min-width: 960px) {
+      position: sticky;
+      top: 120px;
     }
+  }
+
+  &__title {
+    margin-top: 18px;
+    font-family: $font-serif;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 500;
+    line-height: 1.04;
   }
 
   &__statement {
     position: relative;
-    max-width: 760px;
-    margin: 56px auto 0;
-    padding: 0 8px 22px;
-    color: $ink-on-dark;
+    margin-top: 32px;
+    padding: 0 0 18px;
+    color: $bronze-light;
     font-family: $font-serif;
     font-style: italic;
-    font-size: clamp(1.6rem, 4.2vw, 2.4rem);
-    line-height: 1.2;
-    text-align: center;
+    font-size: 1.5rem;
+    line-height: 1.25;
 
     &::after {
-      @include bracket(26px, #c9ad8f);
+      @include bracket(14px, rgba($bronze-light, 0.7));
       right: 0;
       bottom: 0;
       left: 0;
     }
   }
+
+  &__cta {
+    margin-top: 32px;
+  }
+
+  &__steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }
 
 .step {
-  padding: 28px 0 32px;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 8px;
+  padding: 28px 0;
   border-top: 1px solid rgba($ink-on-dark, 0.14);
 
-  // En celular: número a la izquierda, más compacto
-  @media (max-width: 699px) {
-    display: grid;
-    grid-template-columns: 52px 1fr;
-    column-gap: 4px;
-    padding: 22px 0;
+  &:last-child {
+    border-bottom: 1px solid rgba($ink-on-dark, 0.14);
+  }
 
-    .step__num {
-      grid-row: span 2;
-      font-size: 1.9rem;
-    }
-    .step__title {
-      margin-top: 2px;
-    }
+  @media (min-width: 960px) {
+    grid-template-columns: 96px 1fr;
+    padding: 34px 0;
   }
 
   &__num {
-    display: block;
-    color: #c9ad8f;
-    font-weight: 200;
-    font-size: 2.6rem;
+    color: $bronze-light;
+    font-family: $font-serif;
+    font-size: 2.2rem;
     line-height: 1;
-    letter-spacing: -0.02em;
+
+    @media (min-width: 960px) {
+      font-size: 3rem;
+    }
   }
 
   &__title {
-    margin-top: 18px;
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-family: $font-serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   &__text {
     margin-top: 8px;
     color: $ink-on-dark-muted;
-    font-size: 0.95rem;
   }
 }
 
-// ── Proyectos (láminas con cajetín) ───────────────────────────────────────────
-.projects {
-  padding: 64px 0;
+// ── Cifras ────────────────────────────────────────────────────────────────────
+.facts {
+  border-bottom: 1px solid $line;
+  background: $raised;
 
-  @media (min-width: 900px) {
-    padding: 104px 0;
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style: none;
+
+    @media (min-width: 860px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 36px 16px 36px 0;
+    border-bottom: 1px solid $line;
+
+    &:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+
+    @media (min-width: 860px) {
+      padding: 48px 24px;
+      border-bottom: 0;
+      border-left: 1px solid $line;
+
+      &:first-child {
+        padding-left: 0;
+        border-left: 0;
+      }
+    }
+  }
+
+  &__value {
+    color: $primary;
+    font-family: $font-serif;
+    font-size: clamp(2.6rem, 6vw, 3.8rem);
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &__label {
+    max-width: 220px;
+    color: $ink-muted;
+    font-size: 0.92rem;
+  }
+}
+
+// ── Proyectos (láminas) ───────────────────────────────────────────────────────
+.projects {
+  padding: 80px 0;
+
+  @media (min-width: 960px) {
+    padding: 128px 0;
   }
 
   &__grid {
     display: grid;
-    gap: 24px;
-    margin-top: 44px;
+    gap: 32px;
+    margin-top: 56px;
 
-    @media (min-width: 860px) {
+    @media (min-width: 900px) {
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
     }
   }
 }
@@ -729,19 +899,53 @@ onBeforeUnmount(() => {
   border: 1px solid $ink;
   background: $raised;
   outline: 1px solid $line;
-  outline-offset: 6px;
+  outline-offset: 7px;
 
   @media (min-width: 600px) {
-    padding: 36px 36px 0;
+    padding: 40px 40px 0;
   }
 
-  // Línea de cota: |←── alcance ──→|
+  &__head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__code {
+    color: $primary;
+    font-family: $font-serif;
+    font-size: clamp(4rem, 9vw, 5.6rem);
+    font-weight: 500;
+    line-height: 0.8;
+    letter-spacing: -0.02em;
+  }
+
+  &__place {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+
+    strong {
+      font-family: $font-serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+    span {
+      @include eyebrow;
+      color: $ink-muted;
+      font-size: 0.62rem;
+    }
+  }
+
+  // Línea de cota |←── alcance ──→|
   &__dim {
     position: relative;
     display: flex;
     justify-content: center;
     height: 14px;
-    margin-bottom: 30px;
+    margin: 30px 0;
     border-inline: 1px solid $accent;
 
     &::before {
@@ -761,7 +965,7 @@ onBeforeUnmount(() => {
       background: $raised;
       color: $accent-text;
       @include eyebrow;
-      font-size: 0.66rem;
+      font-size: 0.62rem;
       line-height: 14px;
     }
   }
@@ -773,8 +977,8 @@ onBeforeUnmount(() => {
 
     dt {
       @include eyebrow;
-      color: $ink-muted;
-      font-size: 0.66rem;
+      color: $accent-text;
+      font-size: 0.64rem;
     }
     dd {
       margin: 6px 0 0;
@@ -783,12 +987,14 @@ onBeforeUnmount(() => {
   }
 
   &__after {
-    margin: 26px 0 30px;
+    margin: 28px 0 32px;
+    padding-left: 18px;
+    border-left: 1px solid $accent;
     color: $ink;
     font-family: $font-serif;
     font-style: italic;
-    font-size: 1.4rem;
-    line-height: 1.3;
+    font-size: 1.45rem;
+    line-height: 1.28;
   }
 
   // Cajetín de plano
@@ -797,11 +1003,11 @@ onBeforeUnmount(() => {
     margin: auto -24px 0;
     border-collapse: collapse;
     border-top: 1px solid $ink;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
 
     @media (min-width: 600px) {
-      width: calc(100% + 72px);
-      margin: auto -36px 0;
+      width: calc(100% + 80px);
+      margin: auto -40px 0;
     }
 
     th,
@@ -828,98 +1034,53 @@ onBeforeUnmount(() => {
       width: 1%;
       color: $ink-muted;
       @include eyebrow;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       white-space: nowrap;
     }
-    td {
-      color: $ink;
-    }
-  }
-
-  &__code {
-    font-weight: 500;
-    letter-spacing: 0.08em;
   }
 }
 
 // ── Michelle + ¿Es para ti? ───────────────────────────────────────────────────
 .about {
-  padding: 64px 0 72px;
+  padding: 80px 0;
   border-top: 1px solid $line;
   background: $raised;
 
-  @media (min-width: 900px) {
-    padding: 104px 0;
+  @media (min-width: 960px) {
+    padding: 128px 0;
   }
 
   &__inner {
     display: grid;
-    gap: 44px;
+    gap: 56px;
 
-    @media (min-width: 900px) {
-      grid-template-columns: 5fr 6fr;
-      gap: 72px;
-      align-items: start;
-    }
-  }
-
-  &__figure {
-    position: relative;
-    margin: 0 0 0 0;
-    padding-bottom: 14px;
-
-    img {
-      position: relative;
-      z-index: 1;
-      display: block;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 4 / 5;
-      object-fit: cover;
-      object-position: 22% center;
-      border-radius: $radius-sm;
-    }
-
-    &::after {
-      @include bracket(60px);
-      right: -12px;
-      bottom: 0;
-      left: -12px;
-    }
-
-    figcaption {
-      position: absolute;
-      z-index: 2;
-      left: 16px;
-      bottom: 30px;
-      padding: 6px 10px;
-      background: rgba($raised, 0.92);
-      color: $ink;
-      @include eyebrow;
-      font-size: 0.62rem;
-    }
-
-    @media (min-width: 900px) {
-      position: sticky;
-      top: 100px;
+    @media (min-width: 960px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 96px;
     }
   }
 
   &__text {
-    margin-top: 20px;
+    max-width: 520px;
+    margin-top: 24px;
     color: $ink-muted;
-    font-size: 1.08rem;
+    font-size: 1.1rem;
+  }
+
+  &__sign {
+    margin-top: 28px;
+    color: $accent-text;
+    font-family: $font-serif;
+    font-size: 2rem;
+    font-style: italic;
   }
 }
 
 .fit {
-  margin-top: 44px;
-  padding-top: 32px;
-  border-top: 1px solid $line;
-
   &__title {
-    font-size: 1.5rem;
-    font-weight: 300;
+    font-family: $font-serif;
+    font-size: 2rem;
+    font-weight: 500;
   }
 
   &__list {
@@ -929,37 +1090,44 @@ onBeforeUnmount(() => {
 
     li {
       display: grid;
-      grid-template-columns: 28px 1fr;
+      grid-template-columns: 44px 1fr;
       gap: 8px;
-      padding: 14px 0;
-      border-bottom: 1px solid $line;
+      align-items: baseline;
+      padding: 18px 0;
+      border-top: 1px solid $line;
       color: $ink;
+      font-size: 1.02rem;
 
-      i {
-        margin-top: 5px;
-        color: $accent;
-        font-size: 0.9rem;
+      &:last-child {
+        border-bottom: 1px solid $line;
       }
 
       &.is-no {
         color: $ink-muted;
-
-        i {
-          color: $ink-muted;
-        }
       }
+    }
+  }
+
+  &__mark {
+    color: $accent-text;
+    font-family: $font-serif;
+    font-size: 1.15rem;
+    font-style: italic;
+
+    .is-no & {
+      color: $ink-muted;
     }
   }
 }
 
 // ── Cierre ────────────────────────────────────────────────────────────────────
 .closing {
-  padding: 80px 0;
+  padding: 88px 0;
   background: $surface-dark;
   color: $ink-on-dark;
 
-  @media (min-width: 900px) {
-    padding: 112px 0;
+  @media (min-width: 960px) {
+    padding: 136px 0;
   }
 
   &__inner {
@@ -970,16 +1138,29 @@ onBeforeUnmount(() => {
   }
 
   &__title {
-    max-width: 680px;
-    margin: 16px 0 14px;
-    font-size: clamp(2rem, 5.4vw, 3rem);
-    font-weight: 300;
+    max-width: 820px;
+    margin: 22px 0 18px;
+    font-family: $font-serif;
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    font-weight: 500;
+    line-height: 1;
   }
 
   &__sub {
-    max-width: 540px;
-    margin-bottom: 32px;
+    max-width: 520px;
+    margin-bottom: 36px;
     color: $ink-on-dark-muted;
+  }
+
+  &__timer {
+    margin-top: 28px;
+
+    :deep(.countdown__label) {
+      color: $ink-on-dark-muted;
+    }
+    :deep(.countdown__label small) {
+      color: $bronze-light;
+    }
   }
 }
 
@@ -1021,8 +1202,9 @@ onBeforeUnmount(() => {
     strong {
       overflow: hidden;
       color: $ink;
+      font-family: $font-serif;
       font-weight: 500;
-      font-size: 0.92rem;
+      font-size: 1.1rem;
       text-overflow: ellipsis;
       white-space: nowrap;
     }

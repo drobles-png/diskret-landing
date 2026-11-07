@@ -40,8 +40,8 @@ export const SEO = {
 // ── Landing (/) ───────────────────────────────────────────────────────────────
 export const LANDING = {
   topbarTag: 'Arquitectura e interiorismo',
-  // Temporizador del encabezado: cuenta hasta el domingo 23:59 (hora de Ecuador) y se reinicia cada semana.
-  timer: { label: 'Asesorías de esta semana', prefix: 'Cierra en' },
+  // Temporizador del encabezado: ciclos de 12 h (00:00 y 12:00 hora de Ecuador) que se reinician solos.
+  timer: { label: 'Agenda de asesorías', prefix: 'Cierra en' },
   audience: ['Casa recién entregada', 'Casa que ya no te representa', 'Remodelación sin desgaste'],
   headline: 'Diseñamos tu casa completa, de principio a fin.',
   headlineAccent: 'Lo que ves en el render es lo que te entregamos.',
@@ -49,6 +49,18 @@ export const LANDING = {
   videoCaption: 'Arquitecta · El Método Diskret',
   cta: 'Ver el video completo',
   ctaNote: 'Sin costo · Solo te pedimos tus datos para mostrártelo',
+
+  // Banda bajo el hero: el resumen del método con las palabras del VSL
+  // ("Escucharte, especificar cada detalle, escoger contigo los materiales, fabricar en nuestro taller, ejecutar y decorar")
+  methodWords: ['Escuchar', 'Especificar', 'Escoger', 'Fabricar', 'Ejecutar', 'Decorar'],
+
+  // Cifras: solo lo que dice el VSL
+  facts: [
+    { value: '+10', label: 'años diseñando, remodelando y amueblando casas' },
+    { value: '1', label: 'solo equipo, con una sola visión' },
+    { value: '6', label: 'pasos del Método Diskret' },
+    { value: 'Todo', label: 'el mobiliario se fabrica en nuestro propio taller' },
+  ],
 
   pains: {
     eyebrow: 'Lo que veo en casi todas las casas',
@@ -135,6 +147,7 @@ export const LANDING = {
     title: `Soy ${PERSON_NAME}, arquitecta`,
     text: 'Desde hace más de diez años diseño, remodelo y amueblo casas con mi equipo en DISKRET. Para mí, diseñar una casa no es hacer que se vea bonita. Es diseñar la casa que tú quieres vivir.',
     photo: '/michelle-rodriguez.webp',
+    sign: 'Michelle Rodríguez',
   },
 
   // Testimonios REALES del cliente. Vacío = la sección no se muestra.

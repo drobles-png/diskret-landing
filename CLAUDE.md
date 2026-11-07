@@ -13,12 +13,16 @@ califica: `/agendar` (calendario GHL) → `/cita-confirmada` · no califica: `/s
 `CLIENT` lleno · `ASK_CITY = true` · `DEFAULT_COUNTRY = 'EC'` · `STORAGE_PREFIX = 'dk'` ·
 `FUNNEL_TAG = 'funnel-diskret'` · `VSL_POSTER_FALLBACK = '/vsl-poster.webp'` · `SITE_URL` vacío (URL de Vercel).
 
-## Landing (FunnelView.vue) — 6 bloques
-Hero (video enmarcado con el corchete bronce del logo) → Problema (cita + 3 miedos) → Método Diskret
-(sección oscura con retícula de plano, 6 pasos) → Proyectos MC y JR (láminas con cajetín de plano) →
-Michelle + ¿Es para ti? → Cierre. Sin testimonios ni FAQ. Todo el copy sale del VSL (`src/content/copy.ts`).
-Temporizador en el encabezado (`src/components/WeekCountdown.vue`): cuenta hasta el domingo 23:59 hora
-de Ecuador y se reinicia cada semana; texto en `LANDING.timer`.
+## Landing (FunnelView.vue)
+Dirección: editorial de lujo ("Exaggerated Minimalism", ui-ux-pro-max): titulares grandes en
+Cormorant Garamond, mucho aire, Michelle protagonista, recursos de arquitectura propios.
+Bloques: Hero (titular + retrato de Michelle como portada del video, con marco bronce) → Banda con los
+6 verbos del método → Problema (la frase de Michelle en grande + 3 miedos) → Método (plano oscuro,
+título fijo y 6 pasos) → Cifras (+10 años, 1 equipo, 6 pasos, taller propio) → Proyectos MC y JR
+(láminas con cajetín) → Michelle + ¿Es para ti? → Cierre (con temporizador). Sin testimonios ni FAQ.
+Todo el copy sale del VSL (`src/content/copy.ts`).
+Temporizador (`src/components/WeekCountdown.vue`): ciclos de 12 h anclados a las 00:00 y 12:00 hora
+de Ecuador; al llegar a 0 se reinicia solo y todos los visitantes ven la misma cuenta. Texto en `LANDING.timer`.
 
 ## Cualificación (`src/utils/qualification.ts`)
 Preguntas: `momento` (casa_nueva, no_representa, remodelar, solo_info) · `alcance` (casa_completa,
@@ -28,7 +32,7 @@ un_espacio, un_mueble) · `prioridad` (una_vision, sin_desgaste, mas_barato) · 
 
 ## Marca
 Tokens en `src/styles/tokens.scss`: azul pizarra `#34485a` (wordmark), bronce `#9a7d5f` (línea del
-logo), marfil `#f7f3ee`. Tipografía Jost (+ Cormorant Garamond itálica para acentos).
+logo), marfil `#f7f3ee`. Títulos (h1/h2) en Cormorant Garamond 500; textos y botones en Jost.
 Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/favicon.svg`.
 
 ## Pendientes

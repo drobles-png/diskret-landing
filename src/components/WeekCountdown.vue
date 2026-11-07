@@ -1,16 +1,16 @@
 <script setup lang="ts">
-// Temporizador del encabezado: cuenta hasta el domingo 23:59:59 hora de Ecuador (UTC-5, sin horario
-// de verano) y se reinicia cada semana. Texto en LANDING.timer (src/content/copy.ts).
+// Temporizador del encabezado: ciclos de 12 h. Al llegar a 0 vuelve a empezar solo.
+// Los ciclos van anclados al reloj (00:00 y 12:00 hora de Ecuador), así todos los visitantes ven
+// la misma cuenta y recargar la página no la reinicia. Texto en LANDING.timer (src/content/copy.ts).
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { LANDING } from '@/content/copy'
 
-const EC_OFFSET_MS = -5 * 60 * 60 * 1000
+const CYCLE_MS = 12 * 60 * 60 * 1000
+const EC_OFFSET_MS = -5 * 60 * 60 * 1000 // Ecuador: UTC-5 sin horario de verano
 
-function nextSundayEnd(now: number): number {
-  const ec = new Date(now + EC_OFFSET_MS) // "hora de Ecuador" leída con getUTC*
-  const daysToSunday = (7 - ec.getUTCDay()) % 7
-  const end = Date.UTC(ec.getUTCFullYear(), ec.getUTCMonth(), ec.getUTCDate() + daysToSunday, 23, 59, 59)
-  return end - EC_OFFSET_MS
+function msLeft(now: number): number {
+  const elapsed = (((now + EC_OFFSET_MS) % CYCLE_MS) + CYCLE_MS) % CYCLE_MS
+  return CYCLE_MS - elapsed
 }
 
 const now = ref(Date.now())
@@ -22,12 +22,10 @@ onMounted(() => {
 onBeforeUnmount(() => window.clearInterval(timer))
 
 const parts = computed(() => {
-  const left = Math.max(0, nextSundayEnd(now.value) - now.value)
-  const s = Math.floor(left / 1000)
+  const s = Math.floor(msLeft(now.value) / 1000)
   const pad = (n: number) => String(n).padStart(2, '0')
   return [
-    { v: String(Math.floor(s / 86400)), u: 'd' },
-    { v: pad(Math.floor((s % 86400) / 3600)), u: 'h' },
+    { v: pad(Math.floor(s / 3600)), u: 'h' },
     { v: pad(Math.floor((s % 3600) / 60)), u: 'm' },
     { v: pad(s % 60), u: 's' },
   ]
@@ -113,9 +111,6 @@ const label = computed(() => parts.value.map((p) => `${p.v}${p.u}`).join(' '))
       font-size: 0.68rem;
     }
 
-    &:first-child b {
-      min-width: 1ch;
-    }
   }
 }
 </style>

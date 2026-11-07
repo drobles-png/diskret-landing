@@ -41,7 +41,7 @@ export const SEO = {
 export const LANDING = {
   topbarTag: 'Arquitectura e interiorismo',
   // Temporizador del encabezado: ciclos de 12 h (00:00 y 12:00 hora de Ecuador) que se reinician solos.
-  timer: { label: 'Agenda de asesorías', prefix: 'Cierra en' },
+  timer: { label: 'Agenda de asesorías', short: 'Agenda', prefix: 'Cierra en' },
   audience: ['Casa recién entregada', 'Casa que ya no te representa', 'Remodelación sin desgaste'],
   headline: 'Diseñamos tu casa completa, de principio a fin.',
   headlineAccent: 'Lo que ves en el render es lo que te entregamos.',

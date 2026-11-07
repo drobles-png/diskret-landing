@@ -8,7 +8,7 @@ import { useRoute, useRouter } from 'vue-router'
 import BrandLogo from '@/components/BrandLogo.vue'
 import RegistrationModal from '@/components/RegistrationModal.vue'
 import SiteFooter from '@/components/SiteFooter.vue'
-import WeekCountdown from '@/components/WeekCountdown.vue'
+import CountdownTimer from '@/components/CountdownTimer.vue'
 import { IS_LOCAL, PERSON_NAME, STORAGE_PREFIX } from '@/config/funnel'
 import { LANDING } from '@/content/copy'
 import { captureFbParams } from '@/utils/fbclid'
@@ -73,7 +73,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
     <header class="topbar">
       <div class="wrap topbar__inner">
         <BrandLogo />
-        <WeekCountdown />
+        <CountdownTimer />
       </div>
     </header>
 
@@ -81,7 +81,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow">{{ LANDING.topbarTag }}</p>
           <h1 id="hero-title" class="hero__title">
             {{ LANDING.headline }}
             <em class="hero__accent">{{ LANDING.headlineAccent }}</em>
@@ -138,7 +137,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
       <div class="wrap method__inner">
         <div class="method__aside">
           <div v-reveal>
-            <p class="eyebrow eyebrow--light">{{ LANDING.steps.eyebrow }}</p>
             <h2 id="steps-title" class="method__title">{{ LANDING.steps.title }}</h2>
             <p class="method__statement">{{ LANDING.steps.statement }}</p>
           </div>
@@ -160,7 +158,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
         <figure v-reveal class="about__figure">
           <img
             :src="LANDING.about.photo"
-            :alt="PERSON_NAME"
+            :alt="`${PERSON_NAME}, arquitecta de DISKRET, con muestras de madera`"
             width="1080"
             height="1080"
             loading="lazy"
@@ -168,7 +166,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
           />
         </figure>
         <div v-reveal class="about__copy">
-          <p class="eyebrow">{{ LANDING.about.eyebrow }}</p>
           <h2 id="about-title" class="display">{{ LANDING.about.title }}</h2>
           <p class="about__text">{{ LANDING.about.text }}</p>
           <ul class="facts" role="list">
@@ -224,23 +221,6 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-
-  &::before {
-    content: '';
-    width: 32px;
-    height: 1px;
-    background: currentColor;
-    opacity: 0.6;
-  }
-
-  &--light {
-    color: $bronze-light;
-  }
-}
 
 // Números en serif con cifras alineadas (Cormorant usa cifras antiguas por defecto)
 .facts__value {
@@ -249,7 +229,6 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
 
 .display {
   max-width: 760px;
-  margin-top: 18px;
   font-family: $font-serif;
   font-size: clamp(2.2rem, 5.2vw, 3.6rem);
   font-weight: 500;
@@ -302,11 +281,10 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 
   &__title {
-    margin-top: 22px;
     font-family: $font-serif;
-    font-size: clamp(2.7rem, 7.4vw, 5.4rem);
+    font-size: clamp(2.7rem, 6.4vw, 4.6rem);
     font-weight: 500;
-    line-height: 0.98;
+    line-height: 1.02;
     letter-spacing: -0.02em;
   }
 
@@ -356,12 +334,8 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
     &__copy {
       display: contents;
     }
-    .eyebrow {
-      order: 1;
-    }
     &__title {
       order: 2;
-      margin-top: -14px;
     }
     &__media {
       order: 3;
@@ -580,7 +554,6 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 
   &__title {
-    margin-top: 18px;
     font-family: $font-serif;
     font-size: clamp(2.2rem, 5vw, 3.4rem);
     font-weight: 500;
@@ -646,7 +619,7 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
     display: block;
     @include eyebrow;
     color: $bronze-light;
-    font-size: 0.68rem;
+    font-size: 0.78rem;
   }
 
   &__title {

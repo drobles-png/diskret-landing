@@ -38,6 +38,12 @@ h3 {
 
 p {
   margin: 0;
+  text-wrap: pretty;
+}
+
+::selection {
+  background: rgba($accent, 0.28);
+  color: $ink;
 }
 
 a {

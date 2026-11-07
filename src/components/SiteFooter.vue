@@ -40,7 +40,10 @@ const year = new Date().getFullYear()
     margin-bottom: 12px;
 
     a {
-      padding: 8px 0;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0;
       color: $ink-muted;
       text-decoration: none;
 

@@ -345,7 +345,7 @@ onUnmounted(() => {
 
   &__phone {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: 9.75rem minmax(0, 1fr);
     gap: 8px;
   }
 

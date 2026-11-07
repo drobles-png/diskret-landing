@@ -19,7 +19,7 @@ Cormorant Garamond, mucho aire, Michelle protagonista, recursos de arquitectura 
 Bloques (4): Hero (titular + retrato de Michelle como portada del video) → Banda con los 6 verbos del
 método → Método (plano oscuro, línea de tiempo de 6 pasos) → Michelle (foto + presentación + cifras + CTA).
 Sin problema/miedos, proyectos, ¿Es para ti?, cierre, testimonios ni FAQ (pedido de Bakano). Todo el copy sale del VSL (`src/content/copy.ts`).
-Temporizador (`src/components/WeekCountdown.vue`): ciclos de 12 h anclados a las 00:00 y 12:00 hora
+Temporizador (`src/components/CountdownTimer.vue`): ciclos de 12 h anclados a las 00:00 y 12:00 hora
 de Ecuador; al llegar a 0 se reinicia solo y todos los visitantes ven la misma cuenta. Texto en `LANDING.timer`.
 
 ## Cualificación (`src/utils/qualification.ts`)

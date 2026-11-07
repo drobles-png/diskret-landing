@@ -13,10 +13,12 @@ califica: `/agendar` (calendario GHL) → `/cita-confirmada` · no califica: `/s
 `CLIENT` lleno · `ASK_CITY = true` · `DEFAULT_COUNTRY = 'EC'` · `STORAGE_PREFIX = 'dk'` ·
 `FUNNEL_TAG = 'funnel-diskret'` · `VSL_POSTER_FALLBACK = '/vsl-poster.webp'` · `SITE_URL` vacío (URL de Vercel).
 
-## Copy
-Todo sale del VSL (`src/content/copy.ts`). Secciones extra en `FunnelView.vue` agregadas para este
-cliente: `LANDING.projects` (Proyecto MC Samborondón, Proyecto JR Machala), `LANDING.about`
-(foto `public/michelle-rodriguez.webp`) y `LANDING.faq` (las 4 preguntas del VSL). Sin testimonios.
+## Landing (FunnelView.vue) — 6 bloques
+Hero (video enmarcado con el corchete bronce del logo) → Problema (cita + 3 miedos) → Método Diskret
+(sección oscura con retícula de plano, 6 pasos) → Proyectos MC y JR (láminas con cajetín de plano) →
+Michelle + ¿Es para ti? → Cierre. Sin testimonios ni FAQ. Todo el copy sale del VSL (`src/content/copy.ts`).
+Temporizador en el encabezado (`src/components/WeekCountdown.vue`): cuenta hasta el domingo 23:59 hora
+de Ecuador y se reinicia cada semana; texto en `LANDING.timer`.
 
 ## Cualificación (`src/utils/qualification.ts`)
 Preguntas: `momento` (casa_nueva, no_representa, remodelar, solo_info) · `alcance` (casa_completa,

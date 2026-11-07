@@ -40,6 +40,8 @@ export const SEO = {
 // ── Landing (/) ───────────────────────────────────────────────────────────────
 export const LANDING = {
   topbarTag: 'Arquitectura e interiorismo',
+  // Temporizador del encabezado: cuenta hasta el domingo 23:59 (hora de Ecuador) y se reinicia cada semana.
+  timer: { label: 'Asesorías de esta semana', prefix: 'Cierra en' },
   audience: ['Casa recién entregada', 'Casa que ya no te representa', 'Remodelación sin desgaste'],
   headline: 'Diseñamos tu casa completa, de principio a fin.',
   headlineAccent: 'Lo que ves en el render es lo que te entregamos.',
@@ -51,6 +53,7 @@ export const LANDING = {
   pains: {
     eyebrow: 'Lo que veo en casi todas las casas',
     title: 'La mayoría decide su casa por partes, y la casa no habla un mismo idioma',
+    quote: 'Tomar veinte decisiones diferentes para cada rincón suele terminar en espacios desconectados.',
     items: [
       {
         icon: 'fa-clock',
@@ -99,7 +102,8 @@ export const LANDING = {
         text: 'Cada lámpara, cada cortina y cada detalle final, para que todo hable el mismo lenguaje del primer día.',
       },
     ],
-    cta: 'Quiero ver cómo trabajan',
+    statement: 'Lo que ves en el render es lo que te entregamos.',
+    cta: 'Ver el video completo',
   },
 
   // Proyectos reales que se muestran en el VSL. Sin fotos todavía (pendiente: renders o fotos del cliente).
@@ -154,29 +158,6 @@ export const LANDING = {
       { yes: true, text: 'Vives en tu casa hace años y sientes que ya no te representa, que cada espacio quedó por su lado.' },
       { yes: true, text: 'Quieres remodelar sin pasar meses coordinando maestros, carpinteros y tiendas por tu cuenta.' },
       { yes: false, text: 'Buscas cambiar un solo mueble rápido, o la opción más barata aunque no combine con nada.' },
-    ],
-  },
-
-  faq: {
-    eyebrow: 'Preguntas frecuentes',
-    title: 'Lo que más me preguntan antes de remodelar',
-    items: [
-      {
-        q: '¿Hay que hacer toda la casa de una vez?',
-        a: 'No necesariamente. Puedes empezar por la cocina, la sala o un baño. Lo importante es pensarlo como parte de toda la casa, para que más adelante todo converse y no tengas que deshacer nada.',
-      },
-      {
-        q: '¿Puedo ver cómo va a quedar antes de empezar?',
-        a: 'Sí. Con los renders fotorrealistas ves tu espacio terminado, con sus materiales, muebles y luz, antes de mover una sola pared. Y como cada detalle queda especificado, eso que ves es lo que se construye.',
-      },
-      {
-        q: '¿Tengo que estar en la obra todos los días?',
-        a: 'No. Nosotros coordinamos la ejecución y te mantenemos al tanto de cada avance. Tú estás en las decisiones importantes, como escoger materiales o aprobar el diseño.',
-      },
-      {
-        q: '¿Qué pasa con la decoración?',
-        a: 'La escogemos contigo, pieza por pieza, para que la casa no solo quede bien construida, sino que se sienta terminada y vivida desde el primer día.',
-      },
     ],
   },
 

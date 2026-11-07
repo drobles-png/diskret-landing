@@ -118,30 +118,6 @@ export const LANDING = {
     cta: 'Ver el video completo',
   },
 
-  // Proyectos reales que se muestran en el VSL. Sin fotos todavía (pendiente: renders o fotos del cliente).
-  projects: {
-    eyebrow: 'Proyectos reales',
-    title: 'Lo que vieron en el render es lo que hoy viven todos los días',
-    items: [
-      {
-        code: 'Proyecto MC',
-        place: 'Samborondón',
-        scope: 'Sala y comedor',
-        before: 'Su departamento era bonito, pero se sentía frío. Querían un lugar cálido para recibir a su familia los fines de semana.',
-        what: 'Tonos neutros, luz indirecta cálida y espejos para dar amplitud. Ocultamos visualmente la ventana del fondo y escogimos mobiliario con curvas.',
-        after: 'Hoy ese departamento se siente cálido desde que abres la puerta.',
-      },
-      {
-        code: 'Proyecto JR',
-        place: 'Machala',
-        scope: 'Casa completa',
-        before: 'Ingreso, sala, comedor, cocina abierta, baño social, BBQ y una escalera a doble altura: era muy fácil terminar con cada ambiente por su lado.',
-        what: 'Un hilo conductor con la misma paleta y los mismos materiales en toda la casa, la cocina abierta como protagonista y una lámpara protagonista en la escalera.',
-        after: 'Del ingreso a la sala, de la sala a la cocina y de ahí al BBQ, todo pertenece al mismo lugar.',
-      },
-    ],
-  },
-
   about: {
     eyebrow: 'Quién te acompaña',
     title: `Soy ${PERSON_NAME}, arquitecta`,

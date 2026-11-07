@@ -16,11 +16,10 @@ califica: `/agendar` (calendario GHL) → `/cita-confirmada` · no califica: `/s
 ## Landing (FunnelView.vue)
 Dirección: editorial de lujo ("Exaggerated Minimalism", ui-ux-pro-max): titulares grandes en
 Cormorant Garamond, mucho aire, Michelle protagonista, recursos de arquitectura propios.
-Bloques: Hero (titular + retrato de Michelle como portada del video, con marco bronce) → Banda con los
-6 verbos del método → Problema (la frase de Michelle en grande + 3 miedos) → Método (plano oscuro,
-título fijo y 6 pasos) → Cifras (+10 años, 1 equipo, 6 pasos, taller propio) → Proyectos MC y JR
-(láminas con cajetín) → Michelle + ¿Es para ti? → Cierre (con temporizador). Sin testimonios ni FAQ.
-Todo el copy sale del VSL (`src/content/copy.ts`).
+Bloques (6): Hero (titular + retrato de Michelle como portada del video) → Banda con los 6 verbos del
+método → Problema (la frase de Michelle en grande + 3 miedos) → Método (plano oscuro, línea de tiempo de
+6 pasos) → Michelle (foto + presentación + cifras) → Cierre (¿Es para ti? + CTA + temporizador).
+Sin proyectos, testimonios ni FAQ (decisión del cliente/Bakano). Todo el copy sale del VSL (`src/content/copy.ts`).
 Temporizador (`src/components/WeekCountdown.vue`): ciclos de 12 h anclados a las 00:00 y 12:00 hora
 de Ecuador; al llegar a 0 se reinicia solo y todos los visitantes ven la misma cuenta. Texto en `LANDING.timer`.
 
@@ -43,4 +42,3 @@ Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/fav
 - `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.
 - `og:image` en `index.html` es relativa: poner URL absoluta al publicar.
 - Confirmar con Michelle la regla de cualificación (¿presupuesto mínimo?, ¿ciudades que atienden?).
-- Fotos o renders de los proyectos MC y JR (hoy la sección va solo con texto).

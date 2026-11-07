@@ -157,102 +157,40 @@ const pad = (n: number) => String(n).padStart(2, '0')
             <p class="eyebrow eyebrow--light">{{ LANDING.steps.eyebrow }}</p>
             <h2 id="steps-title" class="method__title">{{ LANDING.steps.title }}</h2>
             <p class="method__statement">{{ LANDING.steps.statement }}</p>
-            <button type="button" class="btn btn--light method__cta" data-cta="registro" @click="openModal">
-              {{ LANDING.steps.cta }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-            </button>
           </div>
         </div>
         <ol class="method__steps" role="list">
           <li v-for="(s, i) in LANDING.steps.items" :key="s.title" v-reveal class="step">
-            <span class="step__num" aria-hidden="true">{{ pad(i + 1) }}</span>
-            <div>
-              <h3 class="step__title">{{ s.title }}</h3>
-              <p class="step__text">{{ s.text }}</p>
-            </div>
+            <span class="step__node" aria-hidden="true"></span>
+            <span class="step__num">Paso {{ pad(i + 1) }}</span>
+            <h3 class="step__title">{{ s.title }}</h3>
+            <p class="step__text">{{ s.text }}</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <!-- CIFRAS -->
-    <section class="facts" aria-label="DISKRET en cifras">
-      <ul class="wrap facts__grid" role="list">
-        <li v-for="f in LANDING.facts" :key="f.label" v-reveal class="facts__item">
-          <span class="facts__value">{{ f.value }}</span>
-          <span class="facts__label">{{ f.label }}</span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- PROYECTOS: láminas con cajetín -->
-    <section class="projects" aria-labelledby="projects-title">
-      <div class="wrap">
-        <div v-reveal class="projects__head">
-          <p class="eyebrow">{{ LANDING.projects.eyebrow }}</p>
-          <h2 id="projects-title" class="display">{{ LANDING.projects.title }}</h2>
-        </div>
-        <div class="projects__grid">
-          <article v-for="(p, i) in LANDING.projects.items" :key="p.code" v-reveal class="sheet">
-            <header class="sheet__head">
-              <span class="sheet__code">{{ p.code.replace('Proyecto ', '') }}</span>
-              <span class="sheet__place">
-                <span>Ubicación</span>
-                <strong>{{ p.place }}</strong>
-              </span>
-            </header>
-            <div class="sheet__dim" aria-hidden="true"><span>{{ p.scope }}</span></div>
-            <dl class="sheet__body">
-              <div>
-                <dt>El reto</dt>
-                <dd>{{ p.before }}</dd>
-              </div>
-              <div>
-                <dt>Lo que hicimos</dt>
-                <dd>{{ p.what }}</dd>
-              </div>
-            </dl>
-            <p class="sheet__after">{{ p.after }}</p>
-            <table class="sheet__block">
-              <caption class="sr-only">Ficha del {{ p.code }}</caption>
-              <tbody>
-                <tr>
-                  <th scope="row">Proyecto</th>
-                  <td>{{ p.code }}</td>
-                  <th scope="row">Lámina</th>
-                  <td>{{ pad(i + 1) }}/{{ pad(LANDING.projects.items.length) }}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Ubicación</th>
-                  <td>{{ p.place }}</td>
-                  <th scope="row">Estudio</th>
-                  <td>DISKRET</td>
-                </tr>
-              </tbody>
-            </table>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- MICHELLE + ¿ES PARA TI? -->
+    <!-- MICHELLE: foto + presentación + cifras -->
     <section class="about" aria-labelledby="about-title">
       <div class="wrap about__inner">
-        <div v-reveal class="about__intro">
+        <figure v-reveal class="about__figure">
+          <img
+            :src="LANDING.about.photo"
+            :alt="PERSON_NAME"
+            width="1080"
+            height="1080"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div v-reveal class="about__copy">
           <p class="eyebrow">{{ LANDING.about.eyebrow }}</p>
           <h2 id="about-title" class="display">{{ LANDING.about.title }}</h2>
           <p class="about__text">{{ LANDING.about.text }}</p>
-          <p class="about__sign">{{ LANDING.about.sign }}</p>
-        </div>
-
-        <div v-reveal class="fit">
-          <h3 class="fit__title">{{ LANDING.fit.title }}</h3>
-          <ul class="fit__list" role="list">
-            <li v-for="(f, i) in LANDING.fit.items" :key="i" :class="{ 'is-no': !f.yes }">
-              <span class="fit__mark" aria-hidden="true">{{ f.yes ? 'Sí' : 'No' }}</span>
-              <span>
-                <span class="sr-only">{{ f.yes ? 'Sí es para ti:' : 'No es para ti:' }}</span>
-                {{ f.text }}
-              </span>
+          <ul class="facts" role="list">
+            <li v-for="f in LANDING.facts" :key="f.label">
+              <span class="facts__value">{{ f.value }}</span>
+              <span class="facts__label">{{ f.label }}</span>
             </li>
           </ul>
         </div>
@@ -265,6 +203,20 @@ const pad = (n: number) => String(n).padStart(2, '0')
         <p class="eyebrow eyebrow--light">{{ LANDING.closing.eyebrow }}</p>
         <h2 id="closing-title" class="closing__title">{{ LANDING.closing.title }}</h2>
         <p class="closing__sub">{{ LANDING.closing.sub }}</p>
+
+        <div class="fit">
+          <h3 class="fit__title">{{ LANDING.fit.title }}</h3>
+          <ul class="fit__list" role="list">
+            <li v-for="(f, i) in LANDING.fit.items" :key="i" :class="{ 'is-no': !f.yes }">
+              <span class="fit__mark" aria-hidden="true">{{ f.yes ? 'Sí' : 'No' }}</span>
+              <span>
+                <span class="sr-only">{{ f.yes ? 'Sí es para ti:' : 'No es para ti:' }}</span>
+                {{ f.text }}
+              </span>
+            </li>
+          </ul>
+        </div>
+
         <button type="button" class="btn btn--lg btn--light" data-cta="registro" @click="openModal">
           <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.closing.cta }}
         </button>
@@ -293,16 +245,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
 
 <style scoped lang="scss">
 $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dark)
-
-// Corchete bronce del logo: líneas a los lados y abajo, abierto arriba.
-@mixin bracket($h: 18px, $color: $accent) {
-  content: '';
-  position: absolute;
-  height: $h;
-  border: 1px solid $color;
-  border-top: 0;
-  pointer-events: none;
-}
 
 .reveal {
   opacity: 0;
@@ -341,9 +283,7 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
 }
 
 // Números en serif con cifras alineadas (Cormorant usa cifras antiguas por defecto)
-.step__num,
-.facts__value,
-.sheet__code {
+.facts__value {
   font-variant-numeric: lining-nums;
 }
 
@@ -752,25 +692,13 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 
   &__statement {
-    position: relative;
-    margin-top: 32px;
-    padding: 0 0 18px;
+    margin-top: 28px;
     color: $bronze-light;
     font-family: $font-serif;
     font-style: italic;
     font-size: 1.5rem;
     line-height: 1.25;
 
-    &::after {
-      @include bracket(14px, rgba($bronze-light, 0.7));
-      right: 0;
-      bottom: 0;
-      left: 0;
-    }
-  }
-
-  &__cta {
-    margin-top: 32px;
   }
 
   &__steps {
@@ -780,270 +708,69 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 }
 
+// Línea de tiempo: una línea bronce vertical une los seis pasos
+.method__steps {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    left: 5px;
+    width: 1px;
+    background: linear-gradient(to bottom, $bronze-light, rgba($bronze-light, 0.15));
+  }
+}
+
 .step {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: 8px;
-  padding: 28px 0;
-  border-top: 1px solid rgba($ink-on-dark, 0.14);
+  position: relative;
+  padding: 0 0 40px 40px;
 
   &:last-child {
-    border-bottom: 1px solid rgba($ink-on-dark, 0.14);
+    padding-bottom: 0;
   }
 
   @media (min-width: 960px) {
-    grid-template-columns: 96px 1fr;
-    padding: 34px 0;
+    padding: 0 0 52px 56px;
+  }
+
+  &__node {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    border: 1px solid $bronze-light;
+    background: $surface-dark;
+    transform: rotate(45deg);
   }
 
   &__num {
+    display: block;
+    @include eyebrow;
     color: $bronze-light;
-    font-family: $font-serif;
-    font-size: 2.2rem;
-    line-height: 1;
-
-    @media (min-width: 960px) {
-      font-size: 3rem;
-    }
+    font-size: 0.68rem;
   }
 
   &__title {
+    margin-top: 8px;
     font-family: $font-serif;
-    font-size: 1.6rem;
+    font-size: clamp(1.6rem, 4vw, 2rem);
     font-weight: 500;
-    line-height: 1.15;
+    line-height: 1.1;
   }
 
   &__text {
+    max-width: 480px;
     margin-top: 8px;
     color: $ink-on-dark-muted;
   }
 }
 
-// ── Cifras ────────────────────────────────────────────────────────────────────
-.facts {
-  border-bottom: 1px solid $line;
-  background: $raised;
-
-  &__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    list-style: none;
-
-    @media (min-width: 860px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
-
-  &__item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 36px 16px 36px 0;
-    border-bottom: 1px solid $line;
-
-    &:nth-last-child(-n + 2) {
-      border-bottom: 0;
-    }
-
-    @media (min-width: 860px) {
-      padding: 48px 24px;
-      border-bottom: 0;
-      border-left: 1px solid $line;
-
-      &:first-child {
-        padding-left: 0;
-        border-left: 0;
-      }
-    }
-  }
-
-  &__value {
-    color: $primary;
-    font-family: $font-serif;
-    font-size: clamp(2.6rem, 6vw, 3.8rem);
-    font-weight: 500;
-    line-height: 1;
-  }
-
-  &__label {
-    max-width: 220px;
-    color: $ink-muted;
-    font-size: 0.92rem;
-  }
-}
-
-// ── Proyectos (láminas) ───────────────────────────────────────────────────────
-.projects {
-  padding: 80px 0;
-
-  @media (min-width: 960px) {
-    padding: 128px 0;
-  }
-
-  &__grid {
-    display: grid;
-    gap: 32px;
-    margin-top: 56px;
-
-    @media (min-width: 900px) {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-}
-
-.sheet {
-  display: flex;
-  flex-direction: column;
-  padding: 28px 24px 0;
-  border: 1px solid $ink;
-  background: $raised;
-  outline: 1px solid $line;
-  outline-offset: 7px;
-
-  @media (min-width: 600px) {
-    padding: 40px 40px 0;
-  }
-
-  &__head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  &__code {
-    color: $primary;
-    font-family: $font-serif;
-    font-size: clamp(4rem, 9vw, 5.6rem);
-    font-weight: 500;
-    line-height: 0.8;
-    letter-spacing: -0.02em;
-  }
-
-  &__place {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-
-    strong {
-      font-family: $font-serif;
-      font-size: 1.4rem;
-      font-weight: 500;
-    }
-    span {
-      @include eyebrow;
-      color: $ink-muted;
-      font-size: 0.62rem;
-    }
-  }
-
-  // Línea de cota |←── alcance ──→|
-  &__dim {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    height: 14px;
-    margin: 30px 0;
-    border-inline: 1px solid $accent;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 0;
-      left: 0;
-      height: 1px;
-      background: $accent;
-    }
-
-    span {
-      position: relative;
-      top: -2px;
-      padding: 0 10px;
-      background: $raised;
-      color: $accent-text;
-      @include eyebrow;
-      font-size: 0.62rem;
-      line-height: 14px;
-    }
-  }
-
-  &__body {
-    display: grid;
-    gap: 18px;
-    margin: 0;
-
-    dt {
-      @include eyebrow;
-      color: $accent-text;
-      font-size: 0.64rem;
-    }
-    dd {
-      margin: 6px 0 0;
-      color: $ink-muted;
-    }
-  }
-
-  &__after {
-    margin: 28px 0 32px;
-    padding-left: 18px;
-    border-left: 1px solid $accent;
-    color: $ink;
-    font-family: $font-serif;
-    font-style: italic;
-    font-size: 1.45rem;
-    line-height: 1.28;
-  }
-
-  // Cajetín de plano
-  &__block {
-    width: calc(100% + 48px);
-    margin: auto -24px 0;
-    border-collapse: collapse;
-    border-top: 1px solid $ink;
-    font-size: 0.84rem;
-
-    @media (min-width: 600px) {
-      width: calc(100% + 80px);
-      margin: auto -40px 0;
-    }
-
-    th,
-    td {
-      padding: 9px 12px;
-      border: 1px solid $line;
-      text-align: left;
-      vertical-align: top;
-    }
-    tr:first-child > * {
-      border-top: 0;
-    }
-    tr > :first-child {
-      border-left: 0;
-    }
-    tr > :last-child {
-      border-right: 0;
-    }
-    tr:last-child > * {
-      border-bottom: 0;
-    }
-
-    th {
-      width: 1%;
-      color: $ink-muted;
-      @include eyebrow;
-      font-size: 0.58rem;
-      white-space: nowrap;
-    }
-  }
-}
-
-// ── Michelle + ¿Es para ti? ───────────────────────────────────────────────────
+// ── Michelle ──────────────────────────────────────────────────────────────────
 .about {
   padding: 80px 0;
-  border-top: 1px solid $line;
   background: $raised;
 
   @media (min-width: 960px) {
@@ -1052,71 +779,78 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
 
   &__inner {
     display: grid;
-    gap: 56px;
+    gap: 40px;
 
     @media (min-width: 960px) {
-      grid-template-columns: 1fr 1fr;
-      gap: 96px;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 88px;
+      align-items: center;
+    }
+  }
+
+  &__figure {
+    position: relative;
+    margin: 0;
+    padding: 0 14px 14px 0;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      right: 0;
+      bottom: 0;
+      left: 14px;
+      border: 1px solid $accent;
+    }
+
+    img {
+      position: relative;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      object-position: 24% center;
     }
   }
 
   &__text {
     max-width: 520px;
-    margin-top: 24px;
+    margin-top: 22px;
     color: $ink-muted;
-    font-size: 1.1rem;
-  }
-
-  &__sign {
-    margin-top: 28px;
-    color: $accent-text;
-    font-family: $font-serif;
-    font-size: 2rem;
-    font-style: italic;
+    font-size: 1.08rem;
   }
 }
 
-.fit {
-  &__title {
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 24px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 0;
+    border-top: 1px solid $line;
+  }
+
+  &__value {
+    color: $primary;
     font-family: $font-serif;
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 500;
+    line-height: 1;
   }
 
-  &__list {
-    margin: 20px 0 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      display: grid;
-      grid-template-columns: 44px 1fr;
-      gap: 8px;
-      align-items: baseline;
-      padding: 18px 0;
-      border-top: 1px solid $line;
-      color: $ink;
-      font-size: 1.02rem;
-
-      &:last-child {
-        border-bottom: 1px solid $line;
-      }
-
-      &.is-no {
-        color: $ink-muted;
-      }
-    }
-  }
-
-  &__mark {
-    color: $accent-text;
-    font-family: $font-serif;
-    font-size: 1.15rem;
-    font-style: italic;
-
-    .is-no & {
-      color: $ink-muted;
-    }
+  &__label {
+    color: $ink-muted;
+    font-size: 0.88rem;
+    line-height: 1.45;
   }
 }
 
@@ -1153,13 +887,64 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 
   &__timer {
-    margin-top: 28px;
+    margin-top: 24px;
 
     :deep(.countdown__label) {
       color: $ink-on-dark-muted;
     }
     :deep(.countdown__label small) {
       color: $bronze-light;
+    }
+  }
+}
+
+.fit {
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 40px;
+  text-align: left;
+
+  &__title {
+    margin-bottom: 8px;
+    color: $bronze-light;
+    @include eyebrow;
+    font-family: $font-sans;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 8px;
+      align-items: baseline;
+      padding: 16px 0;
+      border-top: 1px solid rgba($ink-on-dark, 0.14);
+      color: $ink-on-dark;
+
+      &:last-child {
+        border-bottom: 1px solid rgba($ink-on-dark, 0.14);
+      }
+
+      &.is-no {
+        color: $ink-on-dark-muted;
+      }
+    }
+  }
+
+  &__mark {
+    color: $bronze-light;
+    font-family: $font-serif;
+    font-size: 1.2rem;
+    font-style: italic;
+
+    .is-no & {
+      color: $ink-on-dark-muted;
     }
   }
 }

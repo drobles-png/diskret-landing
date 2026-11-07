@@ -62,29 +62,6 @@ export const LANDING = {
     { value: 'Todo', label: 'el mobiliario se fabrica en nuestro propio taller' },
   ],
 
-  pains: {
-    eyebrow: 'Lo que veo en casi todas las casas',
-    title: 'La mayoría decide su casa por partes, y la casa no habla un mismo idioma',
-    quote: 'Tomar veinte decisiones diferentes para cada rincón suele terminar en espacios desconectados.',
-    items: [
-      {
-        icon: 'fa-clock',
-        title: 'El desgaste',
-        text: 'Meses de llamadas, de buscar al maestro que no llegó y de ir de tienda en tienda buscando una lámpara que combine.',
-      },
-      {
-        icon: 'fa-image',
-        title: 'Que no se parezca a lo que te mostraron',
-        text: 'Aprobar un diseño precioso y recibir otra cosa, porque entre la imagen y la obra nadie se aseguró de que cada detalle se cumpliera.',
-      },
-      {
-        icon: 'fa-couch',
-        title: 'Muebles bonitos que no se sienten tuyos',
-        text: 'Piezas que se ven bien en la tienda, pero que no fueron hechas para tus medidas ni para tu forma de vivir.',
-      },
-    ],
-  },
-
   steps: {
     eyebrow: 'El Método Diskret',
     title: 'Un solo equipo diseña, remodela, decora y fabrica tus muebles',
@@ -137,24 +114,6 @@ export const LANDING = {
     eyebrow: 'Quién te acompaña',
     title: 'El equipo',
     items: [] as TeamMember[],
-  },
-
-  fit: {
-    eyebrow: 'Antes de seguir',
-    title: '¿Es para ti?',
-    items: [
-      { yes: true, text: 'Te acaban de entregar tu casa nueva y no sabes por dónde empezar.' },
-      { yes: true, text: 'Vives en tu casa hace años y sientes que ya no te representa, que cada espacio quedó por su lado.' },
-      { yes: true, text: 'Quieres remodelar sin pasar meses coordinando maestros, carpinteros y tiendas por tu cuenta.' },
-      { yes: false, text: 'Buscas cambiar un solo mueble rápido, o la opción más barata aunque no combine con nada.' },
-    ],
-  },
-
-  closing: {
-    eyebrow: 'Siguiente paso',
-    title: 'Empecemos a pensar juntos tu casa',
-    sub: 'Mira el video y agenda una asesoría de diseño con Michelle. Cuéntale cómo es tu espacio y cómo quieres vivirlo.',
-    cta: 'Ver el video completo',
   },
 
   sticky: { title: 'El Método Diskret', sub: `Video de ${PERSON_NAME}`, cta: 'Ver video' },

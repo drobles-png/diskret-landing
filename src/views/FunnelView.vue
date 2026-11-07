@@ -133,22 +133,6 @@ const pad = (n: number) => String(n).padStart(2, '0')
       </p>
     </section>
 
-    <!-- EL PROBLEMA: la frase de Michelle en grande -->
-    <section class="problem" aria-labelledby="pains-title">
-      <div class="wrap">
-        <p v-reveal class="eyebrow">{{ LANDING.pains.eyebrow }}</p>
-        <h2 id="pains-title" v-reveal class="problem__quote">“{{ LANDING.pains.quote }}”</h2>
-        <p v-reveal class="problem__lead">{{ LANDING.pains.title }}.</p>
-        <ol class="fears" role="list">
-          <li v-for="(p, i) in LANDING.pains.items" :key="p.title" v-reveal class="fears__item">
-            <span class="fears__num" aria-hidden="true">{{ pad(i + 1) }}</span>
-            <h3 class="fears__title">{{ p.title }}</h3>
-            <p class="fears__text">{{ p.text }}</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
     <!-- MÉTODO: plano oscuro, título fijo a la izquierda y pasos a la derecha -->
     <section class="method" aria-labelledby="steps-title">
       <div class="wrap method__inner">
@@ -193,34 +177,10 @@ const pad = (n: number) => String(n).padStart(2, '0')
               <span class="facts__label">{{ f.label }}</span>
             </li>
           </ul>
+          <button type="button" class="btn btn--lg about__cta" data-cta="registro" @click="openModal">
+            <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.cta }}
+          </button>
         </div>
-      </div>
-    </section>
-
-    <!-- CIERRE -->
-    <section class="closing" aria-labelledby="closing-title">
-      <div class="wrap closing__inner">
-        <p class="eyebrow eyebrow--light">{{ LANDING.closing.eyebrow }}</p>
-        <h2 id="closing-title" class="closing__title">{{ LANDING.closing.title }}</h2>
-        <p class="closing__sub">{{ LANDING.closing.sub }}</p>
-
-        <div class="fit">
-          <h3 class="fit__title">{{ LANDING.fit.title }}</h3>
-          <ul class="fit__list" role="list">
-            <li v-for="(f, i) in LANDING.fit.items" :key="i" :class="{ 'is-no': !f.yes }">
-              <span class="fit__mark" aria-hidden="true">{{ f.yes ? 'Sí' : 'No' }}</span>
-              <span>
-                <span class="sr-only">{{ f.yes ? 'Sí es para ti:' : 'No es para ti:' }}</span>
-                {{ f.text }}
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <button type="button" class="btn btn--lg btn--light" data-cta="registro" @click="openModal">
-          <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.closing.cta }}
-        </button>
-        <div class="closing__timer"><WeekCountdown /></div>
       </div>
     </section>
 
@@ -587,70 +547,6 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 }
 
-// ── Problema ──────────────────────────────────────────────────────────────────
-.problem {
-  padding: 80px 0 72px;
-
-  @media (min-width: 960px) {
-    padding: 128px 0 112px;
-  }
-
-  &__quote {
-    max-width: 1000px;
-    margin-top: 26px;
-    font-family: $font-serif;
-    font-size: clamp(2rem, 5.4vw, 4rem);
-    font-weight: 500;
-    line-height: 1.06;
-    letter-spacing: -0.01em;
-  }
-
-  &__lead {
-    max-width: 560px;
-    margin-top: 26px;
-    color: $ink-muted;
-    font-size: 1.1rem;
-  }
-}
-
-.fears {
-  display: grid;
-  gap: 0 40px;
-  margin: 56px 0 0;
-  padding: 0;
-  list-style: none;
-
-  @media (min-width: 860px) {
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: 80px;
-  }
-
-  &__item {
-    position: relative;
-    padding: 26px 0 30px;
-    border-top: 1px solid $ink;
-  }
-
-  &__num {
-    display: block;
-    color: $accent-text;
-    @include eyebrow;
-  }
-
-  &__title {
-    margin-top: 16px;
-    font-family: $font-serif;
-    font-size: 1.6rem;
-    font-weight: 500;
-    line-height: 1.15;
-  }
-
-  &__text {
-    margin-top: 10px;
-    color: $ink-muted;
-  }
-}
-
 // ── Método (plano) ────────────────────────────────────────────────────────────
 .method {
   padding: 80px 0;
@@ -823,6 +719,14 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
   }
 }
 
+.about__cta {
+  margin-top: 36px;
+
+  @media (max-width: 959px) {
+    width: 100%;
+  }
+}
+
 .facts {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -851,112 +755,6 @@ $bronze-light: #c9ad8f; // bronce sobre fondos oscuros (7.4:1 sobre $surface-dar
     color: $ink-muted;
     font-size: 0.88rem;
     line-height: 1.45;
-  }
-}
-
-// ── Cierre ────────────────────────────────────────────────────────────────────
-.closing {
-  padding: 88px 0;
-  background: $surface-dark;
-  color: $ink-on-dark;
-
-  @media (min-width: 960px) {
-    padding: 136px 0;
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  &__title {
-    max-width: 820px;
-    margin: 22px 0 18px;
-    font-family: $font-serif;
-    font-size: clamp(2.6rem, 7vw, 4.6rem);
-    font-weight: 500;
-    line-height: 1;
-  }
-
-  &__sub {
-    max-width: 520px;
-    margin-bottom: 36px;
-    color: $ink-on-dark-muted;
-  }
-
-  &__timer {
-    margin-top: 24px;
-
-    :deep(.countdown__label) {
-      color: $ink-on-dark-muted;
-    }
-    :deep(.countdown__label small) {
-      color: $bronze-light;
-    }
-  }
-}
-
-.fit {
-  width: 100%;
-  max-width: 640px;
-  margin-bottom: 40px;
-  text-align: left;
-
-  &__title {
-    margin-bottom: 8px;
-    color: $bronze-light;
-    @include eyebrow;
-    font-family: $font-sans;
-    font-size: 0.72rem;
-    font-weight: 500;
-  }
-
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      display: grid;
-      grid-template-columns: 40px 1fr;
-      gap: 8px;
-      align-items: baseline;
-      padding: 16px 0;
-      border-top: 1px solid rgba($ink-on-dark, 0.14);
-      color: $ink-on-dark;
-
-      &:last-child {
-        border-bottom: 1px solid rgba($ink-on-dark, 0.14);
-      }
-
-      &.is-no {
-        color: $ink-on-dark-muted;
-      }
-    }
-  }
-
-  &__mark {
-    color: $bronze-light;
-    font-family: $font-serif;
-    font-size: 1.2rem;
-    font-style: italic;
-
-    .is-no & {
-      color: $ink-on-dark-muted;
-    }
-  }
-}
-
-.btn--light {
-  background: $raised;
-  color: $primary;
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover:not(:disabled) {
-      background: $ink-on-dark;
-    }
   }
 }
 

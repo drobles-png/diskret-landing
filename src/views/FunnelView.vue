@@ -72,6 +72,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
         <h1 id="hero-title" class="hero__title">
           {{ LANDING.headline }} <span class="accent">{{ LANDING.headlineAccent }}</span>
         </h1>
+        <span class="hero__rule" aria-hidden="true"></span>
         <p class="hero__sub">{{ LANDING.sub }}</p>
 
         <button type="button" class="vsl" data-cta="registro" aria-label="Ver el video completo" @click="openModal">
@@ -122,7 +123,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       <div class="wrap">
         <p class="eyebrow">{{ LANDING.steps.eyebrow }}</p>
         <h2 id="steps-title" class="section__title">{{ LANDING.steps.title }}</h2>
-        <ol class="cards cards--3" role="list">
+        <ol class="cards cards--steps" role="list">
           <li v-for="(s, i) in LANDING.steps.items" :key="s.title" class="card">
             <span class="card__num" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
             <h3 class="card__title">{{ s.title }}</h3>
@@ -137,6 +138,59 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       </div>
     </section>
 
+    <!-- PROYECTOS REALES (del VSL) -->
+    <section class="section" aria-labelledby="projects-title">
+      <div class="wrap">
+        <p class="eyebrow">{{ LANDING.projects.eyebrow }}</p>
+        <h2 id="projects-title" class="section__title">{{ LANDING.projects.title }}</h2>
+        <div class="projects">
+          <article v-for="p in LANDING.projects.items" :key="p.code" class="project">
+            <header class="project__head">
+              <h3 class="project__code">{{ p.code }}</h3>
+              <p class="project__meta">{{ p.place }} · {{ p.scope }}</p>
+            </header>
+            <dl class="project__body">
+              <div>
+                <dt>El reto</dt>
+                <dd>{{ p.before }}</dd>
+              </div>
+              <div>
+                <dt>Lo que hicimos</dt>
+                <dd>{{ p.what }}</dd>
+              </div>
+              <div class="project__after">
+                <dt>Hoy</dt>
+                <dd>{{ p.after }}</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIÉN TE ACOMPAÑA -->
+    <section class="section section--alt" aria-labelledby="about-title">
+      <div class="wrap about">
+        <img
+          class="about__photo"
+          :src="LANDING.about.photo"
+          :alt="PERSON_NAME"
+          width="540"
+          height="540"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="about__copy">
+          <p class="eyebrow">{{ LANDING.about.eyebrow }}</p>
+          <h2 id="about-title" class="section__title">{{ LANDING.about.title }}</h2>
+          <p class="about__text">{{ LANDING.about.text }}</p>
+          <button type="button" class="btn" data-cta="registro" @click="openModal">
+            {{ LANDING.cta }} <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- TESTIMONIOS Y EQUIPO (opcionales: sin items no se muestran) -->
     <TestimonialsSection />
     <TeamSection />
@@ -146,7 +200,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       <div class="wrap">
         <p class="eyebrow">{{ LANDING.fit.eyebrow }}</p>
         <h2 id="fit-title" class="section__title">{{ LANDING.fit.title }}</h2>
-        <ul class="cards cards--3" role="list">
+        <ul class="cards cards--fit" role="list">
           <li v-for="(f, i) in LANDING.fit.items" :key="i" class="card" :class="{ 'card--no': !f.yes }">
             <i :class="['fa-solid', f.yes ? 'fa-circle-check' : 'fa-circle-xmark', 'card__icon']" aria-hidden="true"></i>
             <p class="card__text">
@@ -158,13 +212,30 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
       </div>
     </section>
 
+    <!-- PREGUNTAS FRECUENTES (del VSL) -->
+    <section class="section section--alt" aria-labelledby="faq-title">
+      <div class="wrap faq">
+        <p class="eyebrow">{{ LANDING.faq.eyebrow }}</p>
+        <h2 id="faq-title" class="section__title">{{ LANDING.faq.title }}</h2>
+        <div class="faq__list">
+          <details v-for="f in LANDING.faq.items" :key="f.q" class="faq__item">
+            <summary>
+              {{ f.q }}
+              <i class="fa-solid fa-plus" aria-hidden="true"></i>
+            </summary>
+            <p>{{ f.a }}</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
     <!-- CIERRE -->
     <section class="closing" aria-labelledby="closing-title">
       <div class="wrap closing__inner">
         <p class="eyebrow eyebrow--light">{{ LANDING.closing.eyebrow }}</p>
         <h2 id="closing-title" class="closing__title">{{ LANDING.closing.title }}</h2>
         <p class="closing__sub">{{ LANDING.closing.sub }}</p>
-        <button type="button" class="btn btn--lg" data-cta="registro" @click="openModal">
+        <button type="button" class="btn btn--lg btn--light" data-cta="registro" @click="openModal">
           <i class="fa-solid fa-play" aria-hidden="true"></i> {{ LANDING.closing.cta }}
         </button>
       </div>
@@ -191,7 +262,14 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
 <style scoped lang="scss">
 .accent {
-  color: $primary;
+  display: block;
+  margin-top: 0.25em;
+  color: $accent-text;
+  font-family: $font-serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 0.82em;
+  letter-spacing: 0;
 }
 
 .topbar {
@@ -259,13 +337,22 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
   &__title {
     max-width: 820px;
-    font-size: clamp(2rem, 7vw, 3.5rem);
-    letter-spacing: -0.03em;
+    font-size: clamp(2rem, 6.5vw, 3.4rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  &__rule {
+    display: block;
+    width: 56px;
+    height: 1px;
+    margin-top: 24px;
+    background: $accent;
   }
 
   &__sub {
     max-width: 620px;
-    margin: 16px 0 28px;
+    margin: 20px 0 32px;
     color: $ink-muted;
     font-size: 1.05rem;
   }
@@ -307,7 +394,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.85;
+    object-position: 30% 35%;
   }
 
   &__play {
@@ -316,22 +403,37 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
     place-items: center;
     width: 76px;
     height: 76px;
+    padding-left: 4px;
     border-radius: 50%;
-    background: $primary;
-    color: $on-primary;
-    font-size: 1.6rem;
-    box-shadow: 0 0 0 10px rgba($primary, 0.2);
-    transition: transform 0.2s ease;
+    background: rgba($raised, 0.92);
+    color: $primary;
+    font-size: 1.4rem;
+    box-shadow: 0 0 0 10px rgba($raised, 0.22);
+    transition: transform 200ms $ease-out;
   }
 
-  &:hover &__play {
-    transform: scale(1.06);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover .vsl__play {
+      transform: scale(1.06);
+    }
+  }
+  &:active .vsl__play {
+    transform: scale(0.97);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba($surface-dark, 0.7), transparent 45%);
+    pointer-events: none;
   }
 
   &__caption {
     position: absolute;
-    left: 16px;
-    bottom: 14px;
+    z-index: 1;
+    left: 18px;
+    bottom: 16px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -355,8 +457,9 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
   &__title {
     max-width: 720px;
-    margin: 8px 0 28px;
-    font-size: clamp(1.6rem, 5vw, 2.25rem);
+    margin: 10px 0 32px;
+    font-size: clamp(1.6rem, 4.6vw, 2.3rem);
+    font-weight: 300;
   }
 
   &__cta {
@@ -407,6 +510,143 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
   }
 }
 
+.cards--steps {
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.btn--light {
+  background: $raised;
+  color: $primary;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover:not(:disabled) {
+      background: $ink-on-dark;
+    }
+  }
+}
+
+.cards--fit {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project {
+  padding: 28px;
+  border: 1px solid $line;
+  border-top: 2px solid $accent;
+  border-radius: $radius-md;
+  background: $raised;
+
+  &__code {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+
+  &__meta {
+    @include eyebrow;
+    margin-top: 6px;
+    color: $ink-muted;
+  }
+
+  &__body {
+    display: grid;
+    gap: 18px;
+    margin: 24px 0 0;
+
+    dt {
+      @include eyebrow;
+      color: $accent-text;
+    }
+    dd {
+      margin: 4px 0 0;
+      color: $ink-muted;
+    }
+  }
+
+  &__after dd {
+    color: $ink;
+    font-family: $font-serif;
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.35;
+  }
+}
+
+.about {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+
+  @media (min-width: 820px) {
+    grid-template-columns: 5fr 6fr;
+    gap: 56px;
+  }
+
+  &__photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: $radius-md;
+  }
+
+  &__text {
+    margin: -12px 0 28px;
+    color: $ink-muted;
+    font-size: 1.05rem;
+  }
+}
+
+.faq {
+  max-width: 820px;
+
+  &__list {
+    border-top: 1px solid $line;
+  }
+
+  &__item {
+    border-bottom: 1px solid $line;
+
+    summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      font-size: 1.1rem;
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+
+      i {
+        flex: none;
+        color: $accent;
+        font-size: 0.85rem;
+        transition: transform 200ms $ease-out;
+      }
+    }
+
+    &[open] summary i {
+      transform: rotate(45deg);
+    }
+
+    p {
+      padding: 0 0 22px;
+      color: $ink-muted;
+    }
+  }
+}
+
 .closing {
   padding: 72px 0;
   background: $surface-dark;
@@ -425,8 +665,9 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
   &__title {
     max-width: 680px;
-    margin: 8px 0 12px;
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    margin: 10px 0 14px;
+    font-size: clamp(1.75rem, 5vw, 2.6rem);
+    font-weight: 300;
   }
 
   &__sub {
@@ -484,7 +725,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 .sticky-leave-active {
   transition:
     opacity 0.2s ease,
-    translate 0.2s ease;
+    translate 0.25s $ease-out;
 }
 .sticky-enter-from,
 .sticky-leave-to {

@@ -1,49 +1,58 @@
 <script setup lang="ts">
-// Logo neutro (wordmark de texto + marca SVG). Para un cliente: reemplazar el contenido por
-// <img src="@/assets/logos/<cliente>-logo.webp" :alt="BRAND_NAME" /> (PNG/WebP con fondo transparente).
+// Logo DISKRET redibujado en SVG (wordmark Jost + "VIDA PARA TUS ESPACIOS" + línea bronce),
+// para que se vea nítido y cambie de color sobre fondos oscuros (light).
 import { BRAND_NAME } from '@/config/funnel'
 
 defineProps<{ light?: boolean }>()
 </script>
 
 <template>
-  <span class="logo" :class="{ 'logo--light': light }" role="img" :aria-label="BRAND_NAME">
-    <svg class="logo__mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect class="logo__bg" x="1" y="1" width="30" height="30" rx="8" />
-      <rect x="9" y="9" width="14" height="14" rx="3" fill="none" class="logo__inner" stroke-width="3" />
-    </svg>
-    <span class="logo__text" aria-hidden="true">{{ BRAND_NAME }}</span>
-  </span>
+  <svg
+    class="logo"
+    :class="{ 'logo--light': light }"
+    viewBox="0 0 300 74"
+    role="img"
+    :aria-label="`${BRAND_NAME} · Vida para tus espacios`"
+  >
+    <text class="logo__word" x="150" y="40" text-anchor="middle" textLength="296" lengthAdjust="spacing">DISKRET</text>
+    <text class="logo__tag" x="150" y="58" text-anchor="middle" textLength="214" lengthAdjust="spacing">
+      VIDA PARA TUS ESPACIOS
+    </text>
+    <polyline class="logo__line" points="34,42 34,70 270,70 270,42" />
+  </svg>
 </template>
 
 <style scoped lang="scss">
 .logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: $ink;
+  display: block;
+  width: 148px;
+  height: auto;
+  overflow: visible;
 
-  &__mark {
-    width: 28px;
-    height: 28px;
+  &__word {
+    fill: $primary;
+    font-family: $font-sans;
+    font-size: 48px;
+    font-weight: 400;
   }
-  &__bg {
-    fill: $ink;
+  &__tag {
+    fill: $ink-muted;
+    font-family: $font-sans;
+    font-size: 10.5px;
+    font-weight: 400;
   }
-  &__inner {
-    stroke: $primary;
-  }
-
-  &__text {
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: -0.01em;
+  &__line {
+    fill: none;
+    stroke: $accent;
+    stroke-width: 1.2;
   }
 
   &--light {
-    color: $ink-on-dark;
-    .logo__bg {
-      fill: $raised;
+    .logo__word {
+      fill: $ink-on-dark;
+    }
+    .logo__tag {
+      fill: $ink-on-dark-muted;
     }
   }
 }

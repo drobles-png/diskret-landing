@@ -4,10 +4,10 @@
 
 // ── Cliente ───────────────────────────────────────────────────────────────────
 export const CLIENT = {
-  name: '', // nombre comercial que se muestra: "Mi Marca"
-  person: '', // quien habla en el VSL: "Juan Pérez"
-  instagram: '', // URL completa
-  facebook: '',
+  name: 'DISKRET', // nombre comercial que se muestra: "Mi Marca"
+  person: 'Michelle Rodríguez', // quien habla en el VSL: "Juan Pérez"
+  instagram: 'https://www.instagram.com/diskretbymr/', // URL completa
+  facebook: 'https://www.facebook.com/diskretarqmichellerodriguez',
 }
 
 /** Nombre que se muestra en la página (wordmark, títulos, legales). */
@@ -35,7 +35,7 @@ export const GHL_BOOKING_FRAME_ID = ''
 // Portada del video en la landing (foto de quien habla). URL de Cloudinary (f_auto,q_auto,w_1200).
 // Si el CDN falla se usa VSL_POSTER_FALLBACK (archivo en public/). Ambos vacíos = recuadro oscuro.
 export const VSL_POSTER = ''
-export const VSL_POSTER_FALLBACK = '' // ej. '/vsl-poster.webp'
+export const VSL_POSTER_FALLBACK = '/vsl-poster.webp' // ej. '/vsl-poster.webp'
 // Logo como URL absoluta (para el JSON-LD de la empresa). Vacío = el JSON-LD va sin logo.
 export const LOGO_URL = ''
 
@@ -46,7 +46,7 @@ export const CTA_UNLOCK_SECONDS = 120
 
 // ── Registro ──────────────────────────────────────────────────────────────────
 // true = el formulario de registro pide ciudad (va a GHL como `ciudad`)
-export const ASK_CITY = false
+export const ASK_CITY = true
 // País preseleccionado del teléfono (ISO 3166 alfa-2)
 export const DEFAULT_COUNTRY = 'EC'
 
@@ -75,10 +75,10 @@ export const LEGAL = {
 }
 
 // Prefijo de las claves de localStorage/sessionStorage (2-3 letras del cliente)
-export const STORAGE_PREFIX = 'fn'
+export const STORAGE_PREFIX = 'dk'
 
 // Nombre del funnel para tags y notas de GHL ("funnel-micliente")
-export const FUNNEL_TAG = 'funnel'
+export const FUNNEL_TAG = 'funnel-diskret'
 
 export const IS_LOCAL = /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
 

@@ -1,59 +1,40 @@
-# landings-vsl — plantilla neutra de funnel VSL (Bakano)
+# DISKRET — funnel VSL (Michelle Rodríguez, arquitecta)
 
-Plantilla de la skill `landings-vsl` (`~/.claude/skills/landings-vsl`). **No es un cliente**: no agregar contenido, pixel,
-webhooks ni calendarios reales aquí. Para un cliente se clona en un repo nuevo (ver README).
-Cuando la uses para un cliente, reescribe este archivo con: cliente, flujo, config, envíos y pendientes.
+Creado con la skill `landings-vsl` desde `drobles-png/landings-vsl`. Repo: `drobles-png/diskret-landing`.
+Cliente: DISKRET · "Vida para tus espacios" · IG @diskretbymr · FB diskretarqmichellerodriguez.
+Oferta: asesoría de diseño con Michelle (diseño + remodelación + decoración + muebles de taller propio).
 
-## Stack
-Vue 3 + Vite 7 + TypeScript · SCSS · Pinia · vue-router · pnpm · libphonenumber-js ·
-Font Awesome 6 por CDN · Geist por Google Fonts · función de Vercel `api/capi.ts`.
+## Flujo (agenda, sin pago)
+`/` → registro (nombre, apellido, email, WhatsApp, **ciudad**) → `/ver-video` → cualificación →
+califica: `/agendar` (calendario GHL) → `/cita-confirmada` · no califica: `/sin-espacio` (24 h).
+`PAYMENT_ENABLED = false`.
 
-## Comandos
-`pnpm install` · `pnpm dev` (`--host` para el celular) · `pnpm dev:api` (vercel dev, front + /api) ·
-`pnpm type-check` · `pnpm build` · `pnpm format`
+## Config usada (`src/config/funnel.ts`)
+`CLIENT` lleno · `ASK_CITY = true` · `DEFAULT_COUNTRY = 'EC'` · `STORAGE_PREFIX = 'dk'` ·
+`FUNNEL_TAG = 'funnel-diskret'` · `VSL_POSTER_FALLBACK = '/vsl-poster.webp'` · `SITE_URL` vacío (URL de Vercel).
 
-## Dónde está cada cosa
-- `src/config/funnel.ts` — TODO lo que cambia por cliente. Vacío = esa integración se omite.
-  `PAYMENT_ENABLED` registra o no `/pago` y `/inscripcion-confirmada`.
-- `src/content/copy.ts` — todos los textos (marcadores `[…]`). `SEO` = título/descr. por ruta.
-  `LANDING.testimonials` y `LANDING.team`: opcionales, vacíos = la sección no aparece (solo reales).
-- `src/components/TestimonialsSection.vue`, `TeamSection.vue`, `PersonAvatar.vue` (foto o iniciales).
-- Portada del video en la landing: `VSL_POSTER` (Cloudinary) → `VSL_POSTER_FALLBACK` (public/) → recuadro.
-- `src/utils/qualification.ts` — preguntas, `OBJETIVO` (pregunta abierta) y `qualifies()`.
-- `src/utils/ghl.ts` — contrato GHL (`buildPayload`, `trackStage`, `postToGhl`, `buildNota`, `fbq`).
-- `src/utils/fbclid.ts` — `captureFbParams()` (en cada vista de entrada: `/` y `/ver-video`) y
-  `getStoredFbParams()` (fbc/fbp primero de las cookies del pixel).
-- `src/utils/capi.ts` + `api/capi.ts` — CAPI con el mismo `event_id` que el Pixel; no corre en localhost.
-- `src/components/GhlCalendar.vue` — iframe de GHL: alto automático, prefill, Schedule + `cita_agendada`.
-- `src/styles/tokens.scss` — colores/tipografía (se inyecta en cada `<style lang="scss">`; solo
-  variables y mixins). `global.scss` — botones, campos, modales.
-- `vite.config.ts` — plugin `metaPixel`: lee `META_PIXEL_ID` de la config e inyecta el snippet del
-  pixel en `index.html` (vacío = sin pixel; el snippet no carga en localhost). Plugin
-  `organizationJsonLd`: JSON-LD de la empresa con CLIENT/SITE_URL/LOGO_URL/LEGAL (sin nombre, nada).
-- `api/capi.ts` — solo los 6 eventos del funnel, solo mismo origen (403 si no), token en el cuerpo.
+## Copy
+Todo sale del VSL (`src/content/copy.ts`). Secciones extra en `FunnelView.vue` agregadas para este
+cliente: `LANDING.projects` (Proyecto MC Samborondón, Proyecto JR Machala), `LANDING.about`
+(foto `public/michelle-rodriguez.webp`) y `LANDING.faq` (las 4 preguntas del VSL). Sin testimonios.
 
-## Envíos
-| Momento | GHL (webhook · etapa) | Meta (Pixel + CAPI, mismo event_id) |
-|---|---|---|
-| Registro | contacto · `registro` (abandono con email/tel: `registro_parcial`) | CompleteRegistration |
-| /ver-video | — | ViewContent |
-| Cualificación | cualificación · `cualificacion` (+ `califica`, `resultado`, `*_label`, `objetivo`) | Lead (solo si califica) |
-| Cita | contacto · `cita_agendada` | Schedule |
-| /pago | contacto · `pago-iniciado` | InitiateCheckout |
-| /inscripcion-confirmada | contacto · `pagado` (1 vez por dispositivo) | Purchase |
+## Cualificación (`src/utils/qualification.ts`)
+Preguntas: `momento` (casa_nueva, no_representa, remodelar, solo_info) · `alcance` (casa_completa,
+un_espacio, un_mueble) · `prioridad` (una_vision, sin_desgaste, mas_barato) · abierta `objetivo`.
+**No califica** si: `momento = solo_info` o `alcance = un_mueble` o `prioridad = mas_barato`
+(del VSL: "si buscas cambiar un solo mueble rápido, o la opción más barata… no somos para ti").
 
-## Convenciones (el e2e depende de ellas)
-- `data-field` en cada input: `nombre`, `apellido`, `email`, `phone`, `pais`, `ciudad` (si `ASK_CITY`),
-  `objetivo`, `consent`.
-- `data-cta="registro"` en cada botón que abre el registro; `data-cta="calificar"` en el CTA de /ver-video.
-- Opciones de cualificación: `<label>` que envuelve `<input type="radio" value="…">`.
-- Rutas privadas con `noindex` (y `Disallow` en `public/robots.txt`).
-- Guards: `/agendar` y `/pago` exigen contacto (en localhost no, para diseñar); `/inscripcion-confirmada`
-  exige contacto siempre; `/agendar` además exige haber calificado; `/cita-confirmada` exige cita < 24 h.
+## Marca
+Tokens en `src/styles/tokens.scss`: azul pizarra `#34485a` (wordmark), bronce `#9a7d5f` (línea del
+logo), marfil `#f7f3ee`. Tipografía Jost (+ Cormorant Garamond itálica para acentos).
+Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/favicon.svg`.
 
-## localStorage / sessionStorage (`<STORAGE_PREFIX>_…`)
-`_contact` · `_qualification` · `_disq_at` · `_booked_at` · `_purchase_at` · `_fb` (sessionStorage)
-
-## Pruebas
-`e2e/agenda.json` y `e2e/pago.json` para `~/.claude/skills/landings-vsl/scripts/e2e_funnel.py` (ver README).
-Nunca dejar URLs de prueba en la config al hacer commit.
+## Pendientes
+- `WISTIA_MEDIA_ID` (video del VSL) — lo manda Bakano/cliente.
+- `GHL_CONTACT_WEBHOOK`, `GHL_QUALIFICATION_WEBHOOK` — crear en la subcuenta de GHL de Diskret.
+- `GHL_BOOKING_CALENDAR` + `GHL_BOOKING_FRAME_ID` — código de inserción del calendario.
+- `META_PIXEL_ID` + `META_CAPI_TOKEN` (este solo en Vercel/.env.local).
+- `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.
+- `og:image` en `index.html` es relativa: poner URL absoluta al publicar.
+- Confirmar con Michelle la regla de cualificación (¿presupuesto mínimo?, ¿ciudades que atienden?).
+- Fotos o renders de los proyectos MC y JR (hoy la sección va solo con texto).

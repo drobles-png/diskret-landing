@@ -21,40 +21,42 @@ export interface Question {
 
 export const QUESTIONS = [
   {
-    key: 'perfil',
-    title: '[Pregunta 1: ¿Qué te describe mejor?]',
-    noteLabel: 'Perfil',
+    key: 'momento',
+    title: '¿En qué momento está tu casa?',
+    noteLabel: 'Momento',
     options: [
-      { value: 'perfil_a', label: '[Perfil ideal A]' },
-      { value: 'perfil_b', label: '[Perfil ideal B]' },
-      { value: 'solo_info', label: '[Solo quiero informarme por ahora]' },
+      { value: 'casa_nueva', label: 'Me acaban de entregar mi casa nueva' },
+      { value: 'no_representa', label: 'Vivo ahí hace años y ya no me representa' },
+      { value: 'remodelar', label: 'Quiero remodelar uno o varios espacios' },
+      { value: 'solo_info', label: 'Solo quiero informarme por ahora' },
     ],
   },
   {
-    key: 'situacion',
-    title: '[Pregunta 2: ¿En qué punto estás hoy?]',
-    noteLabel: 'Situación',
+    key: 'alcance',
+    title: '¿Qué quieres hacer?',
+    noteLabel: 'Alcance',
     options: [
-      { value: 'empezando', label: '[Estoy empezando]' },
-      { value: 'en_marcha', label: '[Ya lo hago y quiero crecer]' },
+      { value: 'casa_completa', label: 'Diseñar mi casa completa' },
+      { value: 'un_espacio', label: 'Empezar por un espacio (cocina, sala, baño…)' },
+      { value: 'un_mueble', label: 'Cambiar un solo mueble, algo rápido' },
     ],
   },
   {
-    key: 'inversion',
-    title: '[Pregunta 3: ¿Cómo piensas invertir?]',
-    noteLabel: 'Inversión',
+    key: 'prioridad',
+    title: '¿Qué es lo más importante para ti?',
+    noteLabel: 'Prioridad',
     options: [
-      { value: 'tengo_capital', label: '[Tengo el capital para invertir]' },
-      { value: 'financiamiento', label: '[Con financiamiento o un socio]' },
-      { value: 'sin_presupuesto', label: '[Por ahora no tengo cómo invertir]' },
+      { value: 'una_vision', label: 'Que un solo equipo lo piense todo y se cumpla tal cual' },
+      { value: 'sin_desgaste', label: 'No tener que coordinar maestros, carpinteros y tiendas' },
+      { value: 'mas_barato', label: 'La opción más barata, aunque no combine con todo' },
     ],
   },
 ] as const satisfies readonly Question[]
 
 /** Último paso: pregunta abierta (va a GHL como `objetivo`). */
 export const OBJETIVO = {
-  title: '[Pregunta abierta: ¿Qué quieres lograr?]',
-  placeholder: '[Ejemplo de respuesta que oriente al lead]',
+  title: 'Cuéntanos cómo es tu espacio y cómo quieres vivirlo',
+  placeholder: 'Ej.: Nos entregaron un departamento en Samborondón y queremos que la sala y el comedor se sientan cálidos para recibir a la familia…',
   minWords: 10,
 }
 
@@ -69,13 +71,15 @@ export function labelFor(key: QuestionKey, value: string): string {
   return q?.options.find((o) => o.value === value)?.label ?? value
 }
 
-// ── Regla de cualificación ────────────────────────────────────────────────────
-// Por defecto se descarta solo a quien viene "a informarse" o no tiene cómo invertir.
-// El resto de respuestas no descalifica: sirven para preparar la reunión.
-// Ajustar con el cliente (quién SÍ es cliente) y documentarlo en el CLAUDE.md del proyecto.
+// ── Regla de cualificación (Diskret) ──────────────────────────────────────────
+// Sale del VSL: "Si lo que buscas es cambiar un solo mueble rápido, o elegir la opción más barata
+// aunque no combine con nada, probablemente no somos para ti". También se descarta a quien solo
+// viene a informarse. Todo lo demás califica (casa nueva, casa que no representa, remodelar,
+// casa completa o un espacio). Pendiente confirmar con Michelle (presupuesto, ciudades).
 const DISQUALIFY: Partial<Record<QuestionKey, readonly string[]>> = {
-  perfil: ['solo_info'],
-  inversion: ['sin_presupuesto'],
+  momento: ['solo_info'],
+  alcance: ['un_mueble'],
+  prioridad: ['mas_barato'],
 }
 
 export function qualifies(a: Answers): boolean {

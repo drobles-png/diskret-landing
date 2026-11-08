@@ -21,7 +21,7 @@ export const SITE_URL = ''
 // ── Meta ──────────────────────────────────────────────────────────────────────
 // vite.config.ts inyecta el snippet del pixel en index.html con este id (vacío = sin pixel).
 // CAPI lee el id y el token desde env vars de Vercel (META_PIXEL_ID, META_CAPI_TOKEN), nunca de aquí.
-export const META_PIXEL_ID = ''
+export const META_PIXEL_ID = '1122038170413951'
 
 // ── GoHighLevel (subcuenta DEL CLIENTE) ───────────────────────────────────────
 export const GHL_CONTACT_WEBHOOK = '' // "obtener contacto"

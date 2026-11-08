@@ -37,7 +37,7 @@ Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/fav
 - `WISTIA_MEDIA_ID` (video del VSL) — lo manda Bakano/cliente.
 - `GHL_CONTACT_WEBHOOK`, `GHL_QUALIFICATION_WEBHOOK` — crear en la subcuenta de GHL de Diskret.
 - `GHL_BOOKING_CALENDAR` + `GHL_BOOKING_FRAME_ID` — código de inserción del calendario.
-- `META_PIXEL_ID` + `META_CAPI_TOKEN` (este solo en Vercel/.env.local).
+- `META_CAPI_TOKEN` en Vercel (ya está en `.env.local`; el Pixel ID ya está en `funnel.ts`). Modo landing: GHL sin acción de Meta en los flujos del funnel.
 - `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.
 - `og:image` en `index.html` es relativa: poner URL absoluta al publicar.
 - Confirmar con Michelle la regla de cualificación (¿presupuesto mínimo?, ¿ciudades que atienden?).

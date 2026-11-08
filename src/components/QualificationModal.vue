@@ -185,7 +185,6 @@ onUnmounted(() => {
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
 
-          <p class="eyebrow">{{ CUALIFICACION.eyebrow }}</p>
           <h2 id="q-title" class="modal__title">{{ CUALIFICACION.title }}</h2>
           <p class="modal__sub">{{ CUALIFICACION.sub }}</p>
 

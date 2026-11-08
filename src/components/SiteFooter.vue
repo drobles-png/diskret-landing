@@ -43,6 +43,7 @@ const year = new Date().getFullYear()
       display: inline-flex;
       align-items: center;
       min-height: 44px;
+      gap: 6px;
       padding: 0;
       color: $ink-muted;
       text-decoration: none;

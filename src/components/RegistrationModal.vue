@@ -216,7 +216,6 @@ onUnmounted(() => {
             <i class="fa-solid fa-xmark" aria-hidden="true"></i>
           </button>
 
-          <p class="eyebrow">{{ REGISTRO.eyebrow }}</p>
           <h2 id="r-title" class="modal__title">{{ REGISTRO.title }}</h2>
           <p class="modal__sub">{{ REGISTRO.sub }}</p>
 

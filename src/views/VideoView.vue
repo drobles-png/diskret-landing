@@ -71,7 +71,6 @@ onUnmounted(() => clearInterval(timer))
 <template>
   <StepShell :step="VIDEO.step" wide>
     <section class="vv">
-      <p class="eyebrow">{{ VIDEO.eyebrow }}</p>
       <h1 class="vv__title">{{ VIDEO.title }}</h1>
       <p class="vv__sub">{{ VIDEO.sub }}</p>
 

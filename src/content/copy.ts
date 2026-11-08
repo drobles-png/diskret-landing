@@ -91,7 +91,7 @@ export const LANDING = {
         text: 'Cada lámpara, cada cortina y cada detalle final, para que todo hable el mismo lenguaje del primer día.',
       },
     ],
-    statement: 'Lo que ves en el render es lo que te entregamos.',
+    statement: 'Escucharte, especificar cada detalle, escoger contigo los materiales, fabricar en nuestro taller, ejecutar y decorar.',
     cta: 'Ver el video completo',
   },
 

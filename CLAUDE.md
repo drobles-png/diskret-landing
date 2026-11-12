@@ -1,6 +1,6 @@
 # DISKRET — funnel VSL (Michelle Rodríguez, arquitecta)
 
-Creado con la skill `landings-vsl` desde `drobles-png/landings-vsl`. Repo: `drobles-png/diskret-landing`.
+Creado con la skill `landings-vsl` desde `drobles-png/landings-vsl`. Repo: `BAKANO-PROJECTS/diskret-landing` (privado; remoto `personal` = drobles-png). Vercel: equipo `bakano-proyects`, proyecto `diskret-landing` → https://diskret-landing.vercel.app (deploy por CLI: `vercel deploy --prod --scope bakano-proyects`; Hobby no conecta repos privados de organización).
 Cliente: DISKRET · "Vida para tus espacios" · IG @diskretbymr · FB diskretarqmichellerodriguez.
 Oferta: asesoría de diseño con Michelle (diseño + remodelación + decoración + muebles de taller propio).
 

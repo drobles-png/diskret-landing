@@ -34,7 +34,6 @@ logo), marfil `#f7f3ee`. Títulos (h1/h2) en Cormorant Garamond 500; textos y bo
 Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/favicon.svg`.
 
 ## Pendientes
-- `WISTIA_MEDIA_ID` (video del VSL) — lo manda Bakano/cliente.
 - Calendario GHL "Asesoría de diseño con Michelle" (`qLyHPUXeUKuIDfrwModv`, 60 min, Lun–Vie 9–17, Google Meet): Michelle debe conectar su Google Calendar en GHL para que se cree el link de Meet.
 - Meta: Pixel en `funnel.ts` y `META_PIXEL_ID` + `META_CAPI_TOKEN` en Vercel (production). `META_CAPI_TEST_EVENT_CODE` puesto en Vercel para el Probador: QUITARLO y redeploy antes de pautar. Modo landing: GHL sin acción de Meta en los flujos del funnel.
 - `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.

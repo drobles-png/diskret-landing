@@ -40,7 +40,7 @@ export const VSL_POSTER_FALLBACK = '/vsl-poster.webp' // ej. '/vsl-poster.webp'
 export const LOGO_URL = ''
 
 // ── Video ─────────────────────────────────────────────────────────────────────
-export const WISTIA_MEDIA_ID = ''
+export const WISTIA_MEDIA_ID = 'q9dxb8smfy'
 // Segundos que el CTA de /ver-video queda bloqueado (0 = sin bloqueo). En localhost son 3 s.
 export const CTA_UNLOCK_SECONDS = 120
 

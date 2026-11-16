@@ -50,16 +50,16 @@ export const LANDING = {
   cta: 'Ver el video completo',
   ctaNote: 'Sin costo · Solo te pedimos tus datos para mostrártelo',
 
-  // Banda bajo el hero: el resumen del método con las palabras del VSL
-  // ("Escucharte, especificar cada detalle, escoger contigo los materiales, fabricar en nuestro taller, ejecutar y decorar")
-  methodWords: ['Escuchar', 'Especificar', 'Escoger', 'Fabricar', 'Ejecutar', 'Decorar'],
+  // Banda bajo el hero: los 6 pasos del método con las palabras del VSL
+  // (escucharte, la propuesta, los materiales, nuestro taller, la ejecución, la decoración)
+  methodWords: ['Escuchar', 'Proponer', 'Escoger', 'Fabricar', 'Ejecutar', 'Decorar'],
 
   // Cifras: solo lo que dice el VSL
   facts: [
-    { value: '+10', label: 'años diseñando, remodelando y amueblando casas' },
-    { value: '1', label: 'solo equipo, con una sola visión' },
+    { value: '+10', label: 'años amoblando, diseñando y remodelando espacios' },
     { value: '6', label: 'pasos del Método Diskret' },
-    { value: 'Todo', label: 'el mobiliario se fabrica en nuestro propio taller' },
+    { value: '2', label: 'proyectos reales en el video: Samborondón y Machala' },
+    { value: 'Propio', label: 'taller donde fabricamos tus muebles, con su control de calidad' },
   ],
 
   steps: {
@@ -68,37 +68,37 @@ export const LANDING = {
     items: [
       {
         title: 'Escucharte',
-        text: 'Antes de dibujar una sola línea, entendemos cómo vives: quién usa cada espacio, qué colores te hacen sentir en casa y qué sueñas que tenga.',
+        text: 'Necesitamos entender cómo vives, lo que necesitas y cómo sueñas tu casa.',
       },
       {
-        title: 'La propuesta, especificada',
-        text: 'Renders fotorrealistas, detalles constructivos, materiales, medidas y colores. Quien ejecute la obra sabe exactamente qué hacer.',
+        title: 'La propuesta',
+        text: 'Renders fotorrealistas con planos, medidas, detalles de materiales y detalles constructivos: todo lo que necesitas para ejecutar tu proyecto.',
       },
       {
-        title: 'Materiales en físico',
-        text: 'La piedra, la madera, los acabados y las telas los escoges con nosotros, viéndolos con la luz real de tu espacio.',
+        title: 'Los materiales',
+        text: 'Escogemos contigo las piedras, la madera, las telas, los colores y todos los acabados, en físico.',
       },
       {
         title: 'Nuestro propio taller',
-        text: 'El mueble de la sala, la cocina, el baño y el clóset se fabrican con las medidas exactas de tu espacio.',
+        text: 'Fabricamos los muebles a la medida de cada espacio.',
       },
       {
-        title: 'Ejecución',
-        text: 'Coordinamos la obra y la acompañamos hasta la última pieza. Tú tomas las decisiones que importan.',
+        title: 'La ejecución',
+        text: 'Coordinamos y supervisamos la obra, tomando en cuenta tu opinión en las decisiones importantes.',
       },
       {
-        title: 'Decoración',
-        text: 'Cada lámpara, cada cortina y cada detalle final, para que todo hable el mismo lenguaje del primer día.',
+        title: 'La decoración',
+        text: 'Seleccionamos contigo las telas para cortinas, las lámparas y todos los detalles finales.',
       },
     ],
-    statement: 'Escucharte, especificar cada detalle, escoger contigo los materiales, fabricar en nuestro taller, ejecutar y decorar.',
+    statement: 'Cada espacio tiene personalidad, pero todos hablan el mismo idioma.',
     cta: 'Ver el video completo',
   },
 
   about: {
     eyebrow: 'Quién te acompaña',
     title: `Soy ${PERSON_NAME}, arquitecta`,
-    text: 'Desde hace más de diez años diseño, remodelo y amueblo casas con mi equipo en DISKRET. Para mí, diseñar una casa no es hacer que se vea bonita. Es diseñar la casa que tú quieres vivir.',
+    text: 'Trabajo hace más de diez años con mi equipo DISKRET, amoblando, diseñando y remodelando espacios. Muchas remodelaciones terminan mal, no por falta de gusto, sino por falta de conocimiento.',
     photo: '/michelle-rodriguez.webp',
     sign: 'Michelle Rodríguez',
   },

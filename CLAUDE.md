@@ -35,8 +35,7 @@ Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/fav
 
 ## Pendientes
 - `WISTIA_MEDIA_ID` (video del VSL) — lo manda Bakano/cliente.
-- `GHL_CONTACT_WEBHOOK`, `GHL_QUALIFICATION_WEBHOOK` — crear en la subcuenta de GHL de Diskret.
-- `GHL_BOOKING_CALENDAR` + `GHL_BOOKING_FRAME_ID` — código de inserción del calendario.
-- Meta: Pixel en `funnel.ts` y `META_PIXEL_ID` + `META_CAPI_TOKEN` en Vercel (production). Falta verificar con el Probador de eventos. Modo landing: GHL sin acción de Meta en los flujos del funnel.
+- Calendario GHL "Asesoría de diseño con Michelle" (`qLyHPUXeUKuIDfrwModv`, 60 min, Lun–Vie 9–17, Google Meet): Michelle debe conectar su Google Calendar en GHL para que se cree el link de Meet.
+- Meta: Pixel en `funnel.ts` y `META_PIXEL_ID` + `META_CAPI_TOKEN` en Vercel (production). `META_CAPI_TEST_EVENT_CODE` puesto en Vercel para el Probador: QUITARLO y redeploy antes de pautar. Modo landing: GHL sin acción de Meta en los flujos del funnel.
 - `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.
 - Confirmar con Michelle la regla de cualificación (¿presupuesto mínimo?, ¿ciudades que atienden?).

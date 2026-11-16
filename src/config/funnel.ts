@@ -26,10 +26,10 @@ export const META_PIXEL_ID = '1122038170413951'
 // ── GoHighLevel (subcuenta DEL CLIENTE) ───────────────────────────────────────
 export const GHL_CONTACT_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/Hi9pKNGbS2T77fOG38eo/webhook-trigger/iyhDEAYPIVJYOL6vbBgZ' // "obtener contacto"
 export const GHL_QUALIFICATION_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/Hi9pKNGbS2T77fOG38eo/webhook-trigger/K8Iacy10s1nXOZowfVCV' // "obtener cualificación"
-export const GHL_BOOKING_CALENDAR = '' // URL del src del iframe del código de inserción
+export const GHL_BOOKING_CALENDAR = 'https://api.leadconnectorhq.com/widget/booking/qLyHPUXeUKuIDfrwModv' // URL del src del iframe del código de inserción
 // Id del iframe en formato del código de inserción de GHL (<calendarId>_<timestamp>);
 // form_embed.js lo usa para el alto automático. Cópialo del embed que manda el cliente.
-export const GHL_BOOKING_FRAME_ID = ''
+export const GHL_BOOKING_FRAME_ID = 'qLyHPUXeUKuIDfrwModv_1794845208000'
 
 // ── Imágenes ──────────────────────────────────────────────────────────────────
 // Portada del video en la landing (foto de quien habla). URL de Cloudinary (f_auto,q_auto,w_1200).

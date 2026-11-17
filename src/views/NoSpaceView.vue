@@ -2,10 +2,11 @@
 // /sin-espacio: no calificó. Cooldown de 24 h (QualificationModal guarda <prefijo>_disq_at).
 import { onMounted, ref } from 'vue'
 import StepShell from '@/components/StepShell.vue'
-import { CLIENT, STORAGE_PREFIX } from '@/config/funnel'
+import { CLIENT, STORAGE_PREFIX, whatsappLink } from '@/config/funnel'
 import { NO_SPACE } from '@/content/copy'
 
 const hoursLeft = ref(0)
+const waHref = whatsappLink(NO_SPACE.whatsappMsg)
 
 onMounted(() => {
   const disqAt = Number(localStorage.getItem(`${STORAGE_PREFIX}_disq_at`))
@@ -34,6 +35,9 @@ onMounted(() => {
         </a>
       </div>
 
+      <a v-if="waHref" :href="waHref" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> {{ NO_SPACE.whatsapp }}
+      </a>
       <RouterLink to="/" class="btn btn--ghost">
         <i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver al inicio
       </RouterLink>

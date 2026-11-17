@@ -20,7 +20,7 @@ export interface TeamMember {
 
 export const SEO = {
   landing: {
-    title: `${BRAND_NAME} | Lo que ves en el render es lo que te entregamos`,
+    title: `${BRAND_NAME} | Diseñamos tu casa completa, de principio a fin`,
     description:
       'Diseñamos, remodelamos, decoramos y fabricamos los muebles de tu casa con un solo equipo y una sola visión. Mira cómo trabaja el Método Diskret.',
   },
@@ -44,7 +44,7 @@ export const LANDING = {
   timer: { label: 'Agenda de asesorías', short: 'Agenda', prefix: 'Cierra en' },
   audience: ['Casa recién entregada', 'Casa que ya no te representa', 'Remodelación sin desgaste'],
   headline: 'Diseñamos tu casa completa, de principio a fin.',
-  headlineAccent: 'Lo que ves en el render es lo que te entregamos.',
+  headlineAccent: 'Sin pasar meses hablando con maestros y proveedores.',
   sub: `Diseño, remodelación, decoración y muebles hechos en nuestro propio taller, con un solo equipo y una sola visión. ${PERSON_NAME} te lo cuenta en un video, con dos proyectos reales.`,
   videoCaption: 'Arquitecta · El Método Diskret',
   cta: 'Ver el video completo',
@@ -182,6 +182,8 @@ export const NO_SPACE = {
   cooldown: 'Ya enviaste una solicitud. Podrás intentarlo de nuevo en',
   resourcesTitle: `Sigue inspirándote con ${BRAND_NAME}`,
   resourcesText: 'En Instagram compartimos proyectos, antes y después, mobiliario, iluminación y tips de diseño.',
+  whatsapp: 'Escríbenos por WhatsApp',
+  whatsappMsg: 'Hola, vi el video de Michelle y quiero contarles de mi espacio.',
 }
 
 // ── Pago (no se usa en este funnel: PAYMENT_ENABLED = false) ──────────────────

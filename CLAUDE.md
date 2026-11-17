@@ -38,3 +38,5 @@ Logo redibujado en SVG en `src/components/BrandLogo.vue`; favicon en `public/fav
 - Meta: Pixel en `funnel.ts` y `META_PIXEL_ID` + `META_CAPI_TOKEN` en Vercel (production). Probador de eventos OK (16 nov, eventos del servidor); código de prueba ya quitado. GHL: workflows publicados y probados el 16 nov. Modo landing: GHL sin acción de Meta en los flujos del funnel.
 - `LEGAL` (razón social, RUC, ciudad, correo): hoy las páginas legales muestran "[Pendiente]". No pautar así.
 - Confirmar con Michelle la regla de cualificación (¿presupuesto mínimo?, ¿ciudades que atienden?).
+- WhatsApp 593967898683 (`WHATSAPP_NUMBER`): botón en `/sin-espacio`. Titular: "Diseñamos tu casa completa, de principio a fin. Sin pasar meses hablando con maestros y proveedores." (frase del VSL).
+- Venta cerrada → Meta y fuente del contacto ya están en GHL de Diskret. Sin recordatorios automáticos (agenda 1 a 1). Dominio: se queda `diskret-landing.vercel.app`.
